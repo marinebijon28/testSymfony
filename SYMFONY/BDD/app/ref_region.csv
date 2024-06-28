@@ -1,0 +1,27 @@
+uuid;ref_pays;id_region_sir;libelle_region_min;libelle_region_maj;ajout_manuel;date_heure_creation;personnel_creation;date_heure_modification;personnel_modification;date_heure_archivage;personnel_archivage;archivage
+01905ecb-fb53-73bd-bdb1-568ff16a109f;01905ecb-fa3d-7eda-8bab-2161636e1d9b;6;Mayotte;MAYOTTE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb54-74bc-8d6e-13506ff49902;01905ecb-fa3d-7eda-8bab-2161636e1d9b;84;Auvergne-Rhône-Alpes;AUVERGNE RHONE ALPES;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb55-71cf-a677-e67e04c0324a;01905ecb-fa3d-7eda-8bab-2161636e1d9b;32;Hauts-de-France;HAUTS DE FRANCE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb55-71cf-a677-e67e057cf4f6;01905ecb-fa3d-7eda-8bab-2161636e1d9b;984;Terres australes et antarctiques françaises;TERRES AUSTRALES ET ANTARTIQUES FRANCAISES;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb56-7a68-8055-f0822aa670a7;01905ecb-fa3d-7eda-8bab-2161636e1d9b;53;Bretagne;BRETAGNE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb57-7da0-9504-d80fe9cc0999;01905ecb-fa3d-7eda-8bab-2161636e1d9b;988;Nouvelle-Calédonie;NOUVELLE-CALÉDONIE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb57-7da0-9504-d80feb5eb65a;01905ecb-fa3d-7eda-8bab-2161636e1d9b;27;Bourgogne-Franche-Comté;BOURGOGNE FRANCHE COMTE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb58-72ec-ae1b-f181a1ce02ba;01905ecb-fa3d-7eda-8bab-2161636e1d9b;4;La Réunion;LA REUNION;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb59-7156-b012-9dc0b253c821;01905ecb-fa3d-7eda-8bab-2161636e1d9b;2;Martinique;MARTINIQUE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb59-7156-b012-9dc0b3785653;01905ecb-fa3d-7eda-8bab-2161636e1d9b;75;Nouvelle-Aquitaine;NOUVELLE AQUITAINE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb5a-7664-96ca-419ff3f9c9b3;01905ecb-fa3d-7eda-8bab-2161636e1d9b;977;Saint-Barthélemy;SAINT-BARTHÉLEMY;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb5a-7664-96ca-419ff5463aba;01905ecb-fa3d-7eda-8bab-2161636e1d9b;11;Île-de-France;ILE DE FRANCE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb5b-7893-b4e1-e4832fde30bb;01905ecb-fa3d-7eda-8bab-2161636e1d9b;3;Guyane;GUYANE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb5b-7893-b4e1-e483300f916a;01905ecb-fa3d-7eda-8bab-2161636e1d9b;76;Occitanie;OCCITANIE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb5c-77eb-b2c1-df3604c1c247;01905ecb-fa3d-7eda-8bab-2161636e1d9b;987;Polynésie française;POLYNÉSIE FRANCAISE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb5d-740b-954a-bb5bb999198c;01905ecb-fa3d-7eda-8bab-2161636e1d9b;986;Wallis et Futuna;WALLIS ET FUTUNA;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb5d-740b-954a-bb5bbabf3439;01905ecb-fa3d-7eda-8bab-2161636e1d9b;44;Grand Est;GRAND EST;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb5e-720d-b48b-7f6291917988;01905ecb-fa3d-7eda-8bab-2161636e1d9b;24;Centre-Val de Loire;CENTRE VAL DE LOIRE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb5e-720d-b48b-7f629312c5ad;01905ecb-fa3d-7eda-8bab-2161636e1d9b;975;Saint-Pierre-et-Miquelon;SAINT-PIERRE-ET-MIQUELON;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb5f-7520-88d7-7258c466c70c;01905ecb-fa3d-7eda-8bab-2161636e1d9b;989;Île de Clipperton;ÎLE DE CLIPPERTON;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb60-730a-bf21-aa0e5092235e;01905ecb-fa3d-7eda-8bab-2161636e1d9b;1;Guadeloupe;GUADELOUPE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb61-7190-bc82-8b2079277b7e;01905ecb-fa3d-7eda-8bab-2161636e1d9b;28;Normandie;NORMANDIE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb61-7190-bc82-8b207a36c5d7;01905ecb-fa3d-7eda-8bab-2161636e1d9b;978;Saint-Martin;SAINT-MARTIN;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb62-7064-9a8c-37f26b4794eb;01905ecb-fa3d-7eda-8bab-2161636e1d9b;52;Pays de la Loire;PAYS DE LA LOIRE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb63-7848-ad27-ff8aa6e93fcf;01905ecb-fa3d-7eda-8bab-2161636e1d9b;94;Corse;CORSE;f;2024-06-28 14:22:24+02;Administrateur;;;;;f
+01905ecb-fb63-7848-ad27-ff8aa74f5596;01905ecb-fa3d-7eda-8bab-2161636e1d9b;93;Provence-Alpes-Côte d'Azur;PROVENCE ALPES COTE D AZUR;f;2024-06-28 14:22:24+02;Administrateur;;;;;f

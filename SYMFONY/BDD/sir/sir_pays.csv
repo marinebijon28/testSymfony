@@ -1,0 +1,288 @@
+id;id_pays;libelle_pays_min;libelle_pays_maj;code_iso_numerique;code_iso_2;code_iso_3;libelle_long_pays_min;libelle_long_pays_maj;nationalite;actual;schengen
+1;99111;Bulgarie;BULGARIE;100;BG;BGR;République de bulgarie;RÉPUBLIQUE DE BULGARIE;bulgare;1;False
+2;99115;Tchecoslovaquie;TCHECOSLOVAQUIE;;;;Tchécoslovaquie;TCHÉCOSLOVAQUIE;;2;False
+3;99118;Bosnie-Herzégovine;BOSNIE-HERZEGOVINE;70;BA;BIH;République de bosnie-herzégovine;RÉPUBLIQUE DE BOSNIE-HERZÉGOVINE;bosniaque;1;False
+4;99119;Croatie;CROATIE;191;HR;HRV;République de croatie;RÉPUBLIQUE DE CROATIE;croate;1;False
+5;99120;Monténégro;MONTENEGRO;499;ME;MNE;République du monténégro;RÉPUBLIQUE DU MONTÉNÉGRO;monténégrine;1;False
+6;99120;Serbie-et-montenegro;SERBIE-ET-MONTENEGRO;;;;;;;2;False
+7;99121;Serbie;SERBIE;688;RS;SRB;République de serbie;RÉPUBLIQUE DE SERBIE;serbe;1;False
+8;99123;Russie;RUSSIE;643;RU;RUS;Fédération de russie;FÉDÉRATION DE RUSSIE;russe;1;False
+9;99123;U.r.s.s.;U.R.S.S.;;;;;;;2;False
+10;99124;Turquie d'europe;TURQUIE D'EUROPE;;;;Turquie d'europe;TURQUIE D'EUROPE;;2;False
+11;99125;Albanie;ALBANIE;8;AL;ALB;République d'albanie;RÉPUBLIQUE D'ALBANIE;albanaise;1;False
+12;99128;Saint-Marin;SAINT-MARIN;674;SM;SMR;République de saint-marin;RÉPUBLIQUE DE SAINT-MARIN;marinaise;1;False
+13;99129;Vatican;VATICAN, ou SAINT-SIEGE;336;VA;VAT;État de la cité du vatican;ÉTAT DE LA CITÉ DU VATICAN;vaticane;1;False
+14;99130;Andorre;ANDORRE;20;AD;AND;Principauté d'andorre;PRINCIPAUTÉ D'ANDORRE;andorrane;1;False
+15;99132;Royaume-Uni;ROYAUME-UNI;826;GB;GBR;Royaume-uni de grande-bretagne et d'irlande du nord;ROYAUME-UNI DE GRANDE-BRETAGNE ET D'IRLANDE DU NORD;britannique;1;False
+16;99135;Hollande;HOLLANDE;;;;;;;2;False
+17;99136;Irlande;IRLANDE, ou EIRE;372;IE;IRL;Irlande;IRLANDE;irlandaise;1;False
+18;99138;Monaco;MONACO;492;MC;MCO;Principauté de monaco;PRINCIPAUTÉ DE MONACO;monégasque;1;False
+19;99140;Suisse;SUISSE;756;CH;CHE;Confédération suisse;CONFÉDÉRATION SUISSE;suisse;1;False
+20;99141;Republique democratique allemande;REPUBLIQUE DEMOCRATIQUE ALLEMANDE;;;;République démocratique allemande;RÉPUBLIQUE DÉMOCRATIQUE ALLEMANDE;;2;False
+21;99142;Republique federale d'allemagne;REPUBLIQUE FEDERALE D'ALLEMAGNE;;;;République fédérale d'allemagne;RÉPUBLIQUE FÉDÉRALE D'ALLEMAGNE;;2;False
+22;99148;Biélorussie;BIELORUSSIE;112;BY;BLR;République de biélorussie;RÉPUBLIQUE DE BIÉLORUSSIE;biélorusse;1;False
+23;99151;Moldavie;MOLDAVIE;498;MD;MDA;République de moldavie;RÉPUBLIQUE DE MOLDAVIE;moldave;1;False
+24;99155;Ukraine;UKRAINE;804;UA;UKR;Ukraine;UKRAINE;ukrainienne;1;False
+25;99157;Kosovo;KOSOVO;;XK;;République du kosovo;RÉPUBLIQUE DU KOSOVO;kosovare;1;False
+26;99157;Serbie;SERBIE;;;;;;;2;False
+27;99201;Arabie saoudite;ARABIE SAOUDITE;682;SA;SAU;Royaume d'arabie saoudite;ROYAUME D'ARABIE SAOUDITE;saoudienne;1;False
+28;99202;Yemen (republique arabe du);YEMEN (REPUBLIQUE ARABE DU);;;;Yémen (république arabe du);YÉMEN (RÉPUBLIQUE ARABE DU);;2;False
+29;99203;Irak;IRAQ;368;IQ;IRQ;République d'iraq;RÉPUBLIQUE D'IRAQ;irakienne;1;False
+30;99204;Iran;IRAN;364;IR;IRN;République islamique d'iran;RÉPUBLIQUE ISLAMIQUE D'IRAN;iranienne;1;False
+31;99204;Perse;PERSE;;;;;;;2;False
+32;99205;Liban;LIBAN;422;LB;LBN;République libanaise;RÉPUBLIQUE LIBANAISE;libanaise;1;False
+33;99206;Syrie;SYRIE;760;SY;SYR;République arabe syrienne;RÉPUBLIQUE ARABE SYRIENNE;syrienne;1;False
+34;99207;Israël;ISRAEL;376;IL;ISR;État d'israël;ÉTAT D'ISRAËL;israëlienne;1;False
+35;99208;Turquie;TURQUIE;792;TR;TUR;République turque;RÉPUBLIQUE TURQUE;turque;1;False
+36;99209;Siberie;SIBERIE;;;;Sibérie;SIBÉRIE;;2;False
+37;99210;Turkestan russe;TURKESTAN RUSSE;;;;Turkestan russe;TURKESTAN RUSSE;;2;False
+38;99211;Kamtchatka;KAMTCHATKA;;;;Kamtchatka;KAMTCHATKA;;2;False
+39;99137;Luxembourg;LUXEMBOURG;442;LU;LUX;Grand-duché de luxembourg;GRAND-DUCHÉ DE LUXEMBOURG;luxembourgeoise;1;True
+40;99116;République tchèque;TCHEQUE (REPUBLIQUE);203;CZ;CZE;République tchèque;RÉPUBLIQUE TCHÈQUE;tchèque;1;True
+41;99212;Afghanistan;AFGHANISTAN;4;AF;AFG;État islamique d'afghanistan;ÉTAT ISLAMIQUE D'AFGHANISTAN;afghane;1;False
+42;99213;Pakistan;PAKISTAN;586;PK;PAK;République islamique du pakistan;RÉPUBLIQUE ISLAMIQUE DU PAKISTAN;pakistanaise;1;False
+43;99214;Bhoutan;BHOUTAN;64;BT;BTN;Royaume du bhoutan;ROYAUME DU BHOUTAN;bhoutanaise;1;False
+44;99215;Népal;NEPAL;524;NP;NPL;Royaume du népal;ROYAUME DU NÉPAL;népalaise;1;False
+45;99216;Chine;CHINE;156;CN;CHN;République populaire de chine;RÉPUBLIQUE POPULAIRE DE CHINE;chinoise;1;False
+46;99217;Japon;JAPON;392;JP;JPN;Japon;JAPON;japonaise;1;False
+47;99218;Mandchoukouo;MANDCHOUKOUO;;;;;;;2;False
+48;99218;Mandchourie;MANDCHOURIE;;;;Mandchourie;MANDCHOURIE;;2;False
+49;99219;Thaïlande;THAILANDE;764;TH;THA;Royaume de thaïlande;ROYAUME DE THAÏLANDE;thaïlandaise;1;False
+50;99219;Siam;SIAM;;;;;;;2;False
+51;99220;Philippines;PHILIPPINES;608;PH;PHL;République des philippines;RÉPUBLIQUE DES PHILIPPINES;philippine;1;False
+52;99221;Possessions britanniques au proche-orient;POSSESSIONS BRITANNIQUES AU PROCHE-ORIENT;;;;Possessions britanniques au proche-orient;POSSESSIONS BRITANNIQUES AU PROCHE-ORIENT;;2;False
+53;99222;Jordanie;JORDANIE;400;JO;JOR;Royaume hachémite de jordanie;ROYAUME HACHÉMITE DE JORDANIE;jordanienne;1;False
+54;99222;Transjordanie;TRANSJORDANIE;;;;;;;2;False
+55;99223;Inde;INDE;356;IN;IND;République de l'inde;RÉPUBLIQUE DE L'INDE;indienne;1;False
+56;99224;Birmanie;BIRMANIE;104;MM;MMR;Union de birmanie;UNION DE BIRMANIE;birmane;1;False
+57;99225;Brunei;BRUNEI;96;BN;BRN;Negara brunei darussalam;NEGARA BRUNEI DARUSSALAM;bruneienne;1;False
+58;99225;Borneo britannique;BORNEO BRITANNIQUE;;;;;;;2;False
+59;99226;Singapour;SINGAPOUR;702;SG;SGP;République de singapour;RÉPUBLIQUE DE SINGAPOUR;singapourienne;1;False
+60;99226;Etabls. des detroits;ETABLS. DES DETROITS;;;;;;;2;False
+61;99227;Malaisie;MALAISIE;458;MY;MYS;Malaisie;MALAISIE;malaisienne;1;False
+62;99228;Etats malais non federes;ETATS MALAIS NON FEDERES;;;;États malais non fédérés;ÉTATS MALAIS NON FÉDÉRÉS;;2;False
+126;99315;Abyssinie;ABYSSINIE;;;;;;;2;False
+63;99229;Maldives;MALDIVES;462;MV;MDV;République des maldives;RÉPUBLIQUE DES MALDIVES;maldivienne;1;False
+64;99229;Iles maldives;ILES MALDIVES;;;;;;;2;False
+65;99230;Hong-kong;HONG-KONG;;HK;;Hong-kong;HONG-KONG;;2;False
+66;99231;Indonésie;INDONESIE;360;ID;IDN;République d'indonésie;RÉPUBLIQUE D'INDONÉSIE;indonésienne;1;False
+67;99231;Indes neer. et port.;INDES NEER. ET PORT.;;;;;;;2;False
+68;99232;Macao;MACAO;;MO;;Macao;MACAO;;2;False
+69;99233;Yemen democratique;YEMEN DEMOCRATIQUE;;;;Yémen démocratique;YÉMEN DÉMOCRATIQUE;;2;False
+70;99234;Cambodge;CAMBODGE;116;KH;KHM;Royaume du cambodge;ROYAUME DU CAMBODGE;cambodgienne;1;False
+71;99234;Kampuchea dem.;KAMPUCHEA DEM.;;;;;;;2;False
+72;99235;Sri Lanka;SRI LANKA;144;LK;LKA;République démocratique socialiste du sri lanka;RÉPUBLIQUE DÉMOCRATIQUE SOCIALISTE DU SRI LANKA;sri-lankaise;1;False
+73;99235;Ceylan;CEYLAN;;;;;;;2;False
+74;99236;Formose;FORMOSE;;;;;;;2;False
+75;99237;Coree;COREE;;;;Corée;CORÉE;;2;False
+76;99238;Corée du Nord;COREE (REPUBLIQUE POPULAIRE DEMOCRATIQUE DE);408;KP;PRK;République populaire démocratique de corée;RÉPUBLIQUE POPULAIRE DÉMOCRATIQUE DE CORÉE;nord-coréenne;1;False
+77;99239;Corée du Sud;COREE (REPUBLIQUE DE);410;KR;KOR;République de corée;RÉPUBLIQUE DE CORÉE;sud-coréenne;1;False
+78;99240;Koweit;KOWEIT;414;KW;KWT;État du koweït;ÉTAT DU KOWEÏT;koweitienne;1;False
+79;99241;Laos;LAOS;418;LA;LAO;République démocratique populaire lao;RÉPUBLIQUE DÉMOCRATIQUE POPULAIRE LAO;laotienne;1;False
+80;99242;Mongolie;MONGOLIE;496;MN;MNG;Mongolie;MONGOLIE;mongole;1;False
+81;99242;Mongolie exterieure;MONGOLIE EXTERIEURE;;;;;;;2;False
+82;99243;Vietnam;VIET NAM;704;VN;VNM;République socialiste du viêt nam;RÉPUBLIQUE SOCIALISTE DU VIÊT NAM;vietnamienne;1;False
+83;99244;Tonkin, annam n.;TONKIN, ANNAM N.;;;;;;;2;False
+84;99244;Viet nam du nord;VIET NAM DU NORD;;;;Viêt nam du nord;VIÊT NAM DU NORD;;2;False
+85;99245;Annam s.,cochinchine;ANNAM S.,COCHINCHINE;;;;;;;2;False
+86;99245;Viet nam du sud;VIET NAM DU SUD;;;;Viêt nam du sud;VIÊT NAM DU SUD;;2;False
+87;99246;Bangladesh;BANGLADESH;50;BD;BGD;République populaire du bangladesh;RÉPUBLIQUE POPULAIRE DU BANGLADESH;bangladaise;1;False
+88;99246;Pakistan oriental;PAKISTAN ORIENTAL;;;;;;;2;False
+89;99247;Émirats arabes unis;EMIRATS ARABES UNIS;784;AE;ARE;Émirats arabes unis;ÉMIRATS ARABES UNIS;émirienne;1;False
+90;99248;Qatar;QATAR;634;QA;QAT;État du qatar;ÉTAT DU QATAR;qatarienne;1;False
+91;99249;Bahreïn;BAHREIN;48;BH;BHR;État de bahreïn;ÉTAT DE BAHREÏN;bahreinienne;1;False
+92;99250;Oman;OMAN;512;OM;OMN;Sultanat d'oman;SULTANAT D'OMAN;omanaise;1;False
+93;99250;Mascate-et-oman;MASCATE-ET-OMAN;;;;;;;2;False
+94;99251;Yémen;YEMEN;887;YE;YEM;République du yémen;RÉPUBLIQUE DU YÉMEN;yéménite;1;False
+95;99252;Arménie;ARMENIE;51;AM;ARM;République d'arménie;RÉPUBLIQUE D'ARMÉNIE;arménienne;1;False
+96;99253;Azerbaidjan;AZERBAIDJAN;31;AZ;AZE;République azerbaïdjanaise;RÉPUBLIQUE AZERBAÏDJANAISE;azerbaïdjanaise;1;False
+97;99254;Chypre;CHYPRE;196;CY;CYP;République de chypre;RÉPUBLIQUE DE CHYPRE;chypriote;1;False
+98;99255;Georgie;GEORGIE;268;GE;GEO;République de géorgie;RÉPUBLIQUE DE GÉORGIE;georgienne;1;False
+99;99256;Kazakhstan;KAZAKHSTAN;398;KZ;KAZ;République du kazakhstan;RÉPUBLIQUE DU KAZAKHSTAN;kazakhstanaise;1;False
+100;99257;Kirghizistan;KIRGHIZISTAN;417;KG;KGZ;République kirghize;RÉPUBLIQUE KIRGHIZE;kirghize;1;False
+101;99258;Ouzbekistan;OUZBEKISTAN;860;UZ;UZB;République d'ouzbékistan;RÉPUBLIQUE D'OUZBÉKISTAN;ouzbeke;1;False
+102;99259;Tadjikistan;TADJIKISTAN;762;TJ;TJK;République du tadjikistan;RÉPUBLIQUE DU TADJIKISTAN;tadjike;1;False
+103;99260;Turkménistan;TURKMENISTAN;795;TM;TKM;Turkménistan;TURKMÉNISTAN;turkmène;1;False
+104;99261;Palestine (territoire de);PALESTINE (Territoire de);;;;;;;2;False
+105;99262;Timor oriental;TIMOR ORIENTAL;626;TL;TLS;République démocratique du timor oriental;RÉPUBLIQUE DÉMOCRATIQUE DU TIMOR ORIENTAL;est-timoraise;1;False
+106;99301;Egypte;EGYPTE;818;EG;EGY;République arabe d'égypte;RÉPUBLIQUE ARABE D'ÉGYPTE;égyptienne;1;False
+107;99302;Libéria;LIBERIA;430;LR;LBR;République du liberia;RÉPUBLIQUE DU LIBERIA;libérienne;1;False
+108;99303;Afrique du Sud;AFRIQUE DU SUD;710;ZA;ZAF;République d'afrique du sud;RÉPUBLIQUE D'AFRIQUE DU SUD;sud-africaine;1;False
+109;99303;Union sud-africaine;UNION SUD-AFRICAINE;;;;;;;2;False
+110;99304;Gambie;GAMBIE;270;GM;GMB;République de gambie;RÉPUBLIQUE DE GAMBIE;gambienne;1;False
+111;99305;Cameroun et togo;CAMEROUN ET TOGO;;;;Cameroun et togo;CAMEROUN ET TOGO;;2;False
+112;99306;Sainte helene;SAINTE HELENE;;;;;;;2;False
+113;99307;Soudan anglo-egyptien, kenya, ouganda;SOUDAN ANGLO-EGYPTIEN, KENYA, OUGANDA;;;;Soudan anglo-égyptien, kenya, ouganda;SOUDAN ANGLO-ÉGYPTIEN, KENYA, OUGANDA;;2;False
+114;99308;Zanzibar;ZANZIBAR;;;;Zanzibar;ZANZIBAR;;2;False
+115;99309;Tanzanie;TANZANIE;834;TZ;TZA;République unie de tanzanie;RÉPUBLIQUE UNIE DE TANZANIE;tanzanienne;1;False
+116;99309;Tanganyika, zanzibar;TANGANYIKA, ZANZIBAR;;;;;;;2;False
+117;99310;Zimbabwe;ZIMBABWE;716;ZW;ZWE;République du zimbabwe;RÉPUBLIQUE DU ZIMBABWE;zimbabwéenne;1;False
+118;99310;Rhodesie du sud;RHODESIE DU SUD;;;;;;;2;False
+119;99311;Namibie;NAMIBIE;516;NA;NAM;République de namibie;RÉPUBLIQUE DE NAMIBIE;namibienne;1;False
+120;99311;Sud-ouest africain;SUD-OUEST AFRICAIN;;;;;;;2;False
+121;99312;République démocratique du Congo;CONGO (REPUBLIQUE DEMOCRATIQUE);180;CD;COD;République démocratique du congo;RÉPUBLIQUE DÉMOCRATIQUE DU CONGO;congolaise (R.D.);1;False
+122;99312;Zaire;ZAIRE;;;;;;;2;False
+123;99314;Guinée équatoriale;GUINEE EQUATORIALE;226;GQ;GNQ;République de guinée équatoriale;RÉPUBLIQUE DE GUINÉE ÉQUATORIALE;équato-guinéenne;1;False
+124;99314;Guinee espagnole;GUINEE ESPAGNOLE;;;;;;;2;False
+125;99315;Éthiopie;ETHIOPIE;231;ET;ETH;République démocratique fédérale d'éthiopie;RÉPUBLIQUE DÉMOCRATIQUE FÉDÉRALE D'ÉTHIOPIE;éthiopienne;1;False
+127;99316;Libye;LIBYE;434;LY;LBY;Jamahiriya arabe libyenne populaire et socialiste;JAMAHIRIYA ARABE LIBYENNE POPULAIRE ET SOCIALISTE;libyenne;1;False
+128;99316;Cyrenaique;CYRENAIQUE;;;;;;;2;False
+129;99317;Erythrée;ERYTHREE;232;ER;ERI;État d'érythrée;ÉTAT D'ÉRYTHRÉE;érythréenne;1;False
+130;99318;Somalie;SOMALIE;706;SO;SOM;Somalie;SOMALIE;somalienne;1;False
+131;99320;Iles portugaises de l'ocean indien;ILES PORTUGAISES DE L'OCEAN INDIEN;;;;Îles portugaises de l'océan indien;ÎLES PORTUGAISES DE L'OCÉAN INDIEN;;2;False
+132;99321;Burundi;BURUNDI;108;BI;BDI;République du burundi;RÉPUBLIQUE DU BURUNDI;burundaise;1;False
+133;99321;Urundi;URUNDI;;;;;;;2;False
+134;99322;Cameroun;CAMEROUN;120;CM;CMR;République du cameroun;RÉPUBLIQUE DU CAMEROUN;camerounaise;1;False
+135;99323;République centrafricaine;CENTRAFRICAINE (REPUBLIQUE);140;CF;CAF;République centrafricaine;RÉPUBLIQUE CENTRAFRICAINE;centrafricaine;1;False
+136;99323;Oubangui-chari;OUBANGUI-CHARI;;;;;;;2;False
+137;99324;Congo;CONGO;178;CG;COG;République du congo;RÉPUBLIQUE DU CONGO;congolaise;1;False
+138;99324;Congo-brazzaville;CONGO-BRAZZAVILLE;;;;;;;2;False
+139;99325;Tanger;TANGER;;;;Tanger;TANGER;;2;False
+140;99326;Côte d'Ivoire;COTE D'IVOIRE;384;CI;CIV;République de côte d'ivoire;RÉPUBLIQUE DE CÔTE D'IVOIRE;ivoirienne;1;False
+141;99327;Bénin;BENIN;204;BJ;BEN;République du bénin;RÉPUBLIQUE DU BÉNIN;béninoise;1;False
+142;99327;Dahomey;DAHOMEY;;;;;;;2;False
+143;99328;Gabon;GABON;266;GA;GAB;République gabonaise;RÉPUBLIQUE GABONAISE;gabonaise;1;False
+144;99329;Ghana;GHANA;288;GH;GHA;République du ghana;RÉPUBLIQUE DU GHANA;ghanéenne;1;False
+145;99329;Cote-de-l'or;COTE-DE-L'OR;;;;;;;2;False
+146;99330;Guinée;GUINEE;324;GN;GIN;République de guinée;RÉPUBLIQUE DE GUINÉE;guinéenne;1;False
+147;99330;Guinee francaise;GUINEE FRANCAISE;;;;;;;2;False
+148;99331;Burkina-Faso;BURKINA;854;BF;BFA;Burkina faso;BURKINA FASO;burkinabée;1;False
+149;99331;Haute-volta;HAUTE-VOLTA;;;;;;;2;False
+150;99332;Kenya;KENYA;404;KE;KEN;République du kenya;RÉPUBLIQUE DU KENYA;kenyane;1;False
+151;99333;Madagascar;MADAGASCAR;450;MG;MDG;République de madagascar;RÉPUBLIQUE DE MADAGASCAR;malgache;1;False
+152;99334;Malawi;MALAWI;454;MW;MWI;République du malawi;RÉPUBLIQUE DU MALAWI;malawienne;1;False
+153;99334;Nyassaland;NYASSALAND;;;;;;;2;False
+154;99335;Mali;MALI;466;ML;MLI;République du mali;RÉPUBLIQUE DU MALI;malienne;1;False
+155;99335;Soudan francais;SOUDAN FRANCAIS;;;;;;;2;False
+156;99336;Mauritanie;MAURITANIE;478;MR;MRT;République islamique de mauritanie;RÉPUBLIQUE ISLAMIQUE DE MAURITANIE;mauritanienne;1;False
+157;99337;Niger;NIGER;562;NE;NER;République du niger;RÉPUBLIQUE DU NIGER;nigérienne;1;False
+158;99338;Nigéria;NIGERIA;566;NG;NGA;République fédérale du nigéria;RÉPUBLIQUE FÉDÉRALE DU NIGÉRIA;nigériane;1;False
+159;99339;Ouganda;OUGANDA;800;UG;UGA;République de l'ouganda;RÉPUBLIQUE DE L'OUGANDA;ougandaise;1;False
+160;99340;Rwanda;RWANDA;646;RW;RWA;République rwandaise;RÉPUBLIQUE RWANDAISE;rwandaise;1;False
+161;99340;Ruanda;RUANDA;;;;;;;2;False
+162;99341;Sénégal;SENEGAL;686;SN;SEN;République du sénégal;RÉPUBLIQUE DU SÉNÉGAL;sénégalaise;1;False
+163;99342;Sierra Leone;SIERRA LEONE;694;SL;SLE;République de sierra leone;RÉPUBLIQUE DE SIERRA LEONE;sierra-léonaise;1;False
+164;99343;Soudan;SOUDAN;729;SD;SDN;République du soudan;RÉPUBLIQUE DU SOUDAN;soudanaise;1;False
+165;99343;Anglo-egyptien;ANGLO-EGYPTIEN;;;;;;;2;False
+166;99344;Tchad;TCHAD;148;TD;TCD;République du tchad;RÉPUBLIQUE DU TCHAD;tchadienne;1;False
+167;99345;Togo;TOGO;768;TG;TGO;République togolaise;RÉPUBLIQUE TOGOLAISE;togolaise;1;False
+168;99346;Zambie;ZAMBIE;894;ZM;ZMB;République de zambie;RÉPUBLIQUE DE ZAMBIE;zambienne;1;False
+169;99346;Rhodesie du nord;RHODESIE DU NORD;;;;;;;2;False
+170;99347;Botswana;BOTSWANA;72;BW;BWA;République du botswana;RÉPUBLIQUE DU BOTSWANA;botswanaise;1;False
+171;99347;Bechuanaland;BECHUANALAND;;;;;;;2;False
+172;99348;Lesotho;LESOTHO;426;LS;LSO;Royaume du lesotho;ROYAUME DU LESOTHO;lésothienne;1;False
+173;99348;Basutoland;BASUTOLAND;;;;;;;2;False
+174;99349;Soudan du Sud;SOUDAN DU SUD;728;SS;SSD;République du soudan du sud;RÉPUBLIQUE DU SOUDAN DU SUD;sud-soudanaise;1;False
+175;99350;Maroc;MAROC;504;MA;MAR;Royaume du maroc;ROYAUME DU MAROC;marocaine;1;False
+176;99351;Tunisie;TUNISIE;788;TN;TUN;République tunisienne;RÉPUBLIQUE TUNISIENNE;tunisienne;1;False
+177;99352;Algérie;ALGERIE;12;DZ;DZA;République algérienne démocratique et populaire;RÉPUBLIQUE ALGÉRIENNE DÉMOCRATIQUE ET POPULAIRE;algérienne;1;False
+178;99390;Maurice;MAURICE;480;MU;MUS;République de maurice;RÉPUBLIQUE DE MAURICE;mauricienne;1;False
+179;99392;Guinée-Bissau;GUINEE-BISSAU;624;GW;GNB;République de guinée-bissau;RÉPUBLIQUE DE GUINÉE-BISSAU;bissao-guinéenne;1;False
+180;99392;Guinee portugaise;GUINEE PORTUGAISE;;;;;;;2;False
+181;99393;Mozambique;MOZAMBIQUE;508;MZ;MOZ;République du mozambique;RÉPUBLIQUE DU MOZAMBIQUE;mozambicaine;1;False
+182;99394;Sao Tomé-et-Principe;SAO TOME-ET-PRINCIPE;678;ST;STP;République démocratique de sao tomé-et-principe;RÉPUBLIQUE DÉMOCRATIQUE DE SAO TOMÉ-ET-PRINCIPE;santoméenne;1;False
+183;99395;Angola;ANGOLA;24;AO;AGO;République d'angola;RÉPUBLIQUE D'ANGOLA;angolaise;1;False
+184;99396;Cap-Vert;CAP-VERT;132;CV;CPV;République du cap-vert;RÉPUBLIQUE DU CAP-VERT;cap-verdienne;1;False
+185;99397;Comores;COMORES;174;KM;COM;République fédérale islamique des comores;RÉPUBLIQUE FÉDÉRALE ISLAMIQUE DES COMORES;comorienne;1;False
+186;99398;Seychelles;SEYCHELLES;690;SC;SYC;République des seychelles;RÉPUBLIQUE DES SEYCHELLES;seychelloise;1;False
+187;99399;Djibouti;DJIBOUTI;262;DJ;DJI;République de djibouti;RÉPUBLIQUE DE DJIBOUTI;djiboutienne;1;False
+188;99399;T.f. afars et issas;T.F. AFARS ET ISSAS;;;;;;;2;False
+189;99401;Canada;CANADA;124;CA;CAN;Canada;CANADA;canadienne;1;False
+190;99402;Terre-neuve;TERRE-NEUVE;;;;Terre-neuve;TERRE-NEUVE;;2;False
+191;99403;Labrador;LABRADOR;;;;Labrador;LABRADOR;;2;False
+192;99404;États-Unis;ETATS-UNIS;840;US;USA;États-unis d'amérique;ÉTATS-UNIS D'AMÉRIQUE;américaine;1;False
+193;99405;Mexique;MEXIQUE;484;MX;MEX;États-unis du mexique;ÉTATS-UNIS DU MEXIQUE;mexicaine;1;False
+194;99406;Costa Rica;COSTA RICA;188;CR;CRI;République du costa rica;RÉPUBLIQUE DU COSTA RICA;costaricaine;1;False
+195;99407;Cuba;CUBA;192;CU;CUB;République de cuba;RÉPUBLIQUE DE CUBA;cubaine;1;False
+196;99408;République dominicaine;DOMINICAINE (REPUBLIQUE);214;DO;DOM;République dominicaine;RÉPUBLIQUE DOMINICAINE;dominicaine;1;False
+197;99408;Saint-domingue;SAINT-DOMINGUE;;;;;;;2;False
+198;99409;Guatemala;GUATEMALA;320;GT;GTM;République du guatemala;RÉPUBLIQUE DU GUATEMALA;guatémaltèque;1;False
+199;99410;Haïti;HAITI;332;HT;HTI;République d'haïti;RÉPUBLIQUE D'HAÏTI;haïtienne;1;False
+200;99411;Honduras;HONDURAS;340;HN;HND;République du honduras;RÉPUBLIQUE DU HONDURAS;hondurienne;1;False
+201;99412;Nicaragua;NICARAGUA;558;NI;NIC;République du nicaragua;RÉPUBLIQUE DU NICARAGUA;nicaraguayenne;1;False
+202;99413;Panama;PANAMA;591;PA;PAN;République du panama;RÉPUBLIQUE DU PANAMA;panaméenne;1;False
+203;99414;Salvador;EL SALVADOR;222;SV;SLV;République du salvador;RÉPUBLIQUE DU SALVADOR;salvadorienne;1;False
+204;99415;Argentine;ARGENTINE;32;AR;ARG;République argentine;RÉPUBLIQUE ARGENTINE;argentine;1;False
+205;99416;Brésil;BRESIL;76;BR;BRA;République fédérative du brésil;RÉPUBLIQUE FÉDÉRATIVE DU BRÉSIL;brésilienne;1;False
+206;99417;Chili;CHILI;152;CL;CHL;République du chili;RÉPUBLIQUE DU CHILI;chilienne;1;False
+207;99418;Bolivie;BOLIVIE;68;BO;BOL;État plurinational de bolivie;ÉTAT PLURINATIONAL DE BOLIVIE;bolivienne;1;False
+208;99418;Republique de bolivie;REPUBLIQUE DE BOLIVIE;;;;;;;2;False
+209;99419;Colombie;COLOMBIE;170;CO;COL;République de colombie;RÉPUBLIQUE DE COLOMBIE;colombienne;1;False
+210;99420;Équateur;EQUATEUR;218;EC;ECU;République de l'équateur;RÉPUBLIQUE DE L'ÉQUATEUR;équatorienne;1;False
+211;99421;Paraguay;PARAGUAY;600;PY;PRY;République du paraguay;RÉPUBLIQUE DU PARAGUAY;paraguayenne;1;False
+212;99422;Pérou;PEROU;604;PE;PER;République du pérou;RÉPUBLIQUE DU PÉROU;péruvienne;1;False
+213;99423;Uruguay;URUGUAY;858;UY;URY;République orientale de l'uruguay;RÉPUBLIQUE ORIENTALE DE L'URUGUAY;uruguayenne;1;False
+214;99424;Venezuela;VENEZUELA;862;VE;VEN;République bolivarienne du venezuela;RÉPUBLIQUE BOLIVARIENNE DU VENEZUELA;vénézuelienne;1;False
+215;99424;Republique du venezuela;REPUBLIQUE DU VENEZUELA;;;;;;;2;False
+216;99426;Jamaïque;JAMAIQUE;388;JM;JAM;Jamaïque;JAMAÏQUE;jamaïcaine;1;False
+217;99428;Guyana;GUYANA;328;GY;GUY;République coopérative de guyana;RÉPUBLIQUE COOPÉRATIVE DE GUYANA;guyanienne;1;False
+218;99428;Guyane britannique;GUYANE BRITANNIQUE;;;;;;;2;False
+219;99429;Bélize;BELIZE;84;BZ;BLZ;Belize;BELIZE;bélizienne;1;False
+220;99429;Honduras britannique;HONDURAS BRITANNIQUE;;;;;;;2;False
+221;99431;Antilles neerlandaises;ANTILLES NEERLANDAISES;;AN;;Antilles néerlandaises;ANTILLES NÉERLANDAISES;;2;False
+222;99433;Trinité-et-Tobago;TRINITE-ET-TOBAGO;780;TT;TTO;République de trinité-et-tobago;RÉPUBLIQUE DE TRINITÉ-ET-TOBAGO;trinidadienne;1;False
+223;99434;Barbade;BARBADE;52;BB;BRB;Barbade;BARBADE;barbadienne;1;False
+224;99435;Grenade;GRENADE;308;GD;GRD;Grenade;GRENADE;grenadienne;1;False
+225;99436;Bahamas;BAHAMAS;44;BS;BHS;Commonwealth des bahamas;COMMONWEALTH DES BAHAMAS;bahaméenne;1;False
+226;99436;Iles  lucayes;ILES  LUCAYES;;;;;;;2;False
+227;99437;Suriname;SURINAME;740;SR;SUR;République du suriname;RÉPUBLIQUE DU SURINAME;surinamaise;1;False
+228;99437;Guyane neerlandaise;GUYANE NEERLANDAISE;;;;;;;2;False
+229;99438;Dominique;DOMINIQUE;212;DM;DMA;Commonwealth de dominique;COMMONWEALTH DE DOMINIQUE;dominiquaise;1;False
+230;99439;Sainte-Lucie;SAINTE-LUCIE;662;LC;LCA;Sainte-lucie;SAINTE-LUCIE;lucienne;1;False
+231;99440;Saint-Vincent-et-les-Grenadines;SAINT-VINCENT-ET-LES GRENADINES;670;VC;VCT;Saint-vincent-et-les grenadines;SAINT-VINCENT-ET-LES GRENADINES;vincentaise;1;False
+232;99441;Antigua-et-Barbuda;ANTIGUA-ET-BARBUDA;28;AG;ATG;Antigua-et-barbuda;ANTIGUA-ET-BARBUDA;antiguayenne;1;False
+233;99442;Saint-Christophe-et-Niévès;SAINT-CHRISTOPHE-ET-NIEVES;659;KN;KNA;Fédération de saint-christophe-et-niévès;FÉDÉRATION DE SAINT-CHRISTOPHE-ET-NIÉVÈS;kittitienne-et-névicienne;1;False
+234;99443;Pays-Bas caribéens;BONAIRE, SAINT EUSTACHE ET SABA;535;BQ;BES;Bonaire, saint eustache et saba;BONAIRE, SAINT EUSTACHE ET SABA;néerlandaise;1;False
+235;99501;Australie;AUSTRALIE;36;AU;AUS;Australie;AUSTRALIE;australienne;1;False
+236;99502;Nouvelle-Zélande;NOUVELLE-ZELANDE;554;NZ;NZL;Nouvelle-zélande;NOUVELLE-ZÉLANDE;néo-zélandaise;1;False
+237;99504;Hawaii (iles);HAWAII (ILES);;;;Hawaii (îles);HAWAII (ÎLES);;2;False
+238;99391;Swaziland;SWAZILAND;;;;Royaume du swaziland;ROYAUME DU SWAZILAND;;2;False
+239;99506;Samoa;SAMOA OCCIDENTALES;882;WS;WSM;État indépendant des samoa occidentales;ÉTAT INDÉPENDANT DES SAMOA OCCIDENTALES;samoane;1;False
+240;99507;Nauru;NAURU;520;NR;NRU;République de nauru;RÉPUBLIQUE DE NAURU;nauruane;1;False
+241;99508;Fidji;FIDJI;242;FJ;FJI;République des fidji;RÉPUBLIQUE DES FIDJI;fidjienne;1;False
+242;99509;Tonga;TONGA;776;TO;TON;Royaume des tonga;ROYAUME DES TONGA;tonguienne;1;False
+243;99510;Papouasie-Nouvelle-Guinée;PAPOUASIE-NOUVELLE-GUINEE;598;PG;PNG;Papouasie-nouvelle-guinée;PAPOUASIE-NOUVELLE-GUINÉE;papouasienne;1;False
+244;99511;Tuvalu;TUVALU;798;TV;TUV;Tuvalu;TUVALU;tuvaluane;1;False
+245;99511;Iles ellice;ILES ELLICE;;;;;;;2;False
+246;99512;Salomon;SALOMON (ILES);90;SB;SLB;Îles salomon;ÎLES SALOMON;salomonaise;1;False
+247;99512;Iles salomon du sud;ILES SALOMON DU SUD;;;;;;;2;False
+248;99513;Kiribati;KIRIBATI;296;KI;KIR;République de kiribati;RÉPUBLIQUE DE KIRIBATI;kiribatienne;1;False
+249;99513;Iles gilbert;ILES GILBERT;;;;;;;2;False
+250;99514;Vanuatu;VANUATU;548;VU;VUT;République de vanuatu;RÉPUBLIQUE DE VANUATU;vanuataise;1;False
+251;99514;Nouvelles-hebrides;NOUVELLES-HEBRIDES;;;;;;;2;False
+252;99515;Iles Marshall;MARSHALL (ILES);584;MH;MHL;République des îles marshall;RÉPUBLIQUE DES ÎLES MARSHALL;marshallaise;1;False
+253;99516;Micronésie;MICRONESIE (ETATS FEDERES DE);583;FM;FSM;États fédérés de micronésie;ÉTATS FÉDÉRÉS DE MICRONÉSIE;micronésienne;1;False
+254;99517;Palaos;PALAOS (ILES);585;PW;PLW;République des îles palaos;RÉPUBLIQUE DES ÎLES PALAOS;palaoise;1;False
+255;99517;Belau;BELAU;;;;;;;2;False
+256;99114;Roumanie;ROUMANIE;642;RO;ROU;Roumanie;ROUMANIE;roumaine;1;False
+257;99444;Curaçao;CURAÇAO;531;CW;CUW;Curaçao;CURAÇAO;néerlandaise;1;False
+258;99445;Saint-martin (partie neerlandaise);SAINT-MARTIN (PARTIE NEERLANDAISE);534;SX;SXM;Saint-martin (partie néerlandaise);SAINT-MARTIN (PARTIE NÉERLANDAISE);néerlandaise;1;False
+259;99261;Palestine (etat de);PALESTINE (Etat de);275;PS;PSE;État de palestine;ÉTAT DE PALESTINE;palestinienne;1;False
+260;99391;Eswatini;ESWATINI;748;SZ;SWZ;Royaume d'eswatini;ROYAUME D'ESWATINI;swazie;1;False
+261;99156;Macédoine du Nord;EX-REPUBLIQUE YOUGOSLAVE DE MACEDOINE;807;MK;MKD;Ex-république yougoslave de macédoine;EX-RÉPUBLIQUE YOUGOSLAVE DE MACÉDOINE;macédonienne;1;False
+262;99156;Macédoine;EX-REPUBLIQUE YOUGOSLAVE DE MACEDOINE;807;MK;MKD;Ex-république yougoslave de macédoine;EX-RÉPUBLIQUE YOUGOSLAVE DE MACÉDOINE;macédonienne;2;False
+263;99998;Apatride;APATRIDE;;;;Apatride;APATRIDE;apatride;1;False
+264;99999;Indéterminée;INDETERMINEE;;;;Indéterminée;INDETERMINEE;indéterminée;1;False
+265;99109;Allemagne;ALLEMAGNE;276;DE;DEU;République fédérale d'allemagne;RÉPUBLIQUE FÉDÉRALE D'ALLEMAGNE;allemande;1;True
+266;99122;Pologne;POLOGNE;616;PL;POL;République de pologne;RÉPUBLIQUE DE POLOGNE;polonaise;1;True
+267;99112;Hongrie;HONGRIE;348;HU;HUN;République de hongrie;RÉPUBLIQUE DE HONGRIE;hongroise;1;True
+268;99144;Malte;MALTE;470;MT;MLT;République de malte;RÉPUBLIQUE DE MALTE;maltaise;1;True
+269;99135;Pays-Bas;PAYS-BAS;528;NL;NLD;Royaume des pays-bas;ROYAUME DES PAYS-BAS;néerlandaise;1;True
+270;99104;Suède;SUEDE;752;SE;SWE;Royaume de suède;ROYAUME DE SUÈDE;suédoise;1;True
+271;99101;Danemark;DANEMARK;208;DK;DNK;Royaume du danemark;ROYAUME DU DANEMARK;danoise;1;True
+272;99160;France;FRANCE;250;FR;FRA;République française;RÉPUBLIQUE FRANÇAISE;française;1;True
+273;99103;Norvège;NORVEGE;578;NO;NOR;Royaume de norvège;ROYAUME DE NORVÈGE;norvégienne;1;True
+274;99145;Slovénie;SLOVENIE;705;SI;SVN;République de slovénie;RÉPUBLIQUE DE SLOVÉNIE;slovène;1;True
+275;99105;Finlande;FINLANDE;246;FI;FIN;République de finlande;RÉPUBLIQUE DE FINLANDE;finlandaise;1;True
+276;99117;Slovaquie;SLOVAQUIE;703;SK;SVK;République slovaque;RÉPUBLIQUE SLOVAQUE;slovaque;1;True
+277;99131;Belgique;BELGIQUE;56;BE;BEL;Royaume de belgique;ROYAUME DE BELGIQUE;belge;1;True
+278;99139;Portugal;PORTUGAL;620;PT;PRT;République portugaise;RÉPUBLIQUE PORTUGAISE;portugaise;1;True
+279;99107;Lettonie;LETTONIE;428;LV;LVA;République de lettonie;RÉPUBLIQUE DE LETTONIE;lettone;1;True
+280;99113;Liechtenstein;LIECHTENSTEIN;438;LI;LIE;Principauté de liechtenstein;PRINCIPAUTÉ DE LIECHTENSTEIN;liechtensteinoise;1;True
+281;99108;Lituanie;LITUANIE;440;LT;LTU;République de lituanie;RÉPUBLIQUE DE LITUANIE;lituanienne;1;True
+282;99134;Espagne;ESPAGNE;724;ES;ESP;Royaume d'espagne;ROYAUME D'ESPAGNE;espagnole;1;True
+283;99102;Islande;ISLANDE;352;IS;ISL;République d'islande;RÉPUBLIQUE D'ISLANDE;islandaise;1;True
+284;99127;Italie;ITALIE;380;IT;ITA;République italienne;RÉPUBLIQUE ITALIENNE;italienne;1;True
+285;99126;Grèce;GRECE;300;GR;GRC;République hellénique;RÉPUBLIQUE HELLÉNIQUE;grecque;1;True
+286;99106;Estonie;ESTONIE;233;EE;EST;République d'estonie;RÉPUBLIQUE D'ESTONIE;estonienne;1;True
+287;99110;Autriche;AUTRICHE;40;AT;AUT;République d'autriche;RÉPUBLIQUE D'AUTRICHE;autrichienne;1;True
