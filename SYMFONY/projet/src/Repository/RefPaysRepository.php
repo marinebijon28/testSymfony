@@ -16,6 +16,46 @@ class RefPaysRepository extends ServiceEntityRepository
         parent::__construct($registry, RefPays::class);
     }
 
+    public function ifExistTableRefPays()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare("
+            CREATE TABLE IF NOT EXISTS ref_pays (
+                uuid uuid PRIMARY KEY NOT NULL,
+                id_pays_sir TEXT,
+                libelle_pays_min TEXT,
+                libelle_pays_maj TEXT,
+                code_iso_3 TEXT,
+                nationalite TEXT,
+                date_heure_creation TIMESTAMP(0) WITH TIME ZONE NOT NULL,
+                personnel_creation TEXT NOT NULL,
+                personnel_modification TEXT,
+                date_heure_archivage TIMESTAMP(0) WITH TIME ZONE,
+                personnel_archivage TEXT,
+                archivage BOOLEAN NOT NULL
+            );
+             ");
+          //  $res = $stmt->executeQuery([]);
+            $stmt->executeStatement();
+//            $stmt = $this->getEntityManager()->getConnection()->prepare("CREATE UNIQUE INDEX ref_pays_pkey
+//                ON ref_pays USING btree (uuid);");
+//            $stmt->executeQuery([]);
+//            $stmt = $this->getEntityManager()->getConnection()->prepare("ALTER TABLE public.ref_pays
+//                    ADD CONSTRAINT ref_pays_pkey PRIMARY KEY (uuid);");
+//            $stmt->executeQuery([]);
+                $stmt = $this->getEntityManager()->getConnection()->prepare("CREATE INDEX IF NOT EXISTS pk_ref_pays
+                    ON ref_pays USING btree (uuid);");
+                $stmt->executeQuery([]);
+                $stmt = $this->getEntityManager()->getConnection()->prepare("create INDEX IF NOT EXISTS
+                    idx__ref_pays__id_sir_libelle_min_maj ON ref_pays USING btree (id_pays_sir, libelle_pays_min, 
+                    libelle_pays_maj);");
+                $stmt->executeQuery([]);
+                $stmt = $this->getEntityManager()->getConnection()->prepare("CREATE INDEX IF NOT EXISTS
+                    idx__ref_pays__archivage ON ref_pays USING btree (archivage);");
+                $stmt->executeQuery([]);
+    }
+
     //    /**
     //     * @return RefPays[] Returns an array of RefPays objects
     //     */
