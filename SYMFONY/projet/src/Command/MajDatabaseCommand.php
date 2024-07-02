@@ -2,7 +2,10 @@
 
 namespace App\Command;
 
+use App\Entity\RefCommune;
+use App\Entity\RefDepartement;
 use App\Entity\RefPays;
+use App\Entity\RefRegion;
 use App\Service\Sir\Entity\SirPays;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -57,8 +60,12 @@ class MajDatabaseCommand extends Command
         // base de données
         $sirPays = $this->_objectManagerSir->getRepository(SirPays::class)->findAll();
 
-
         $refPays = $this->_objectManagerRef->getRepository(RefPays::class)->ifExistTableRefPays();
+
+        $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)->ifExistTableRefRegion();
+        $refDepartement = $this->_objectManagerRef->getRepository(RefDepartement::class)
+            ->ifExistTableRefDepartement();
+        $refCommune = $this->_objectManagerRef->getRepository(RefCommune::class)->ifExistTableRefCommune();
 
 
 
