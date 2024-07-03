@@ -58,9 +58,17 @@ class MajDatabaseCommand extends Command
 
 
         // base de données
+        $refPays = $this->_objectManagerRef->getRepository(RefPays::class);
+        $refPays->ifExistTableRefPays();
         $sirPays = $this->_objectManagerSir->getRepository(SirPays::class)->findAll();
-
-        $refPays = $this->_objectManagerRef->getRepository(RefPays::class)->ifExistTableRefPays();
+        for ($index = 0; $index < count($sirPays); $index++) {
+           // var_dump($refPays->findBy(["idPaysSir" => $sirPays[$index]->getIdPays()]));
+            if ($refPays->findBy(["idPaysSir" => $sirPays[$index]->getIdPays()]) === [])
+                $refPays->insertValue($sirPays[$index]);
+            print_r($sirPays[$index]->getIdPays());
+        }
+        die;
+       // dd($sirPays);
 
         $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)->ifExistTableRefRegion();
         $refDepartement = $this->_objectManagerRef->getRepository(RefDepartement::class)

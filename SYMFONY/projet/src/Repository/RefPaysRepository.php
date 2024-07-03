@@ -3,12 +3,21 @@
 namespace App\Repository;
 
 use App\Entity\RefPays;
+use App\Service\Sir\Entity\SirPays;
+use DateTime;
+use DateTimeZone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<RefPays>
+ *
+ * @method RefPays|null find($id, $lockMode = null, $lockVersion = null)
+ * @method RefPays|null findOneBy(array $criteria, array $orderBy = null)
+ * @method RefPays[]    findAll()
+ * @method RefPays[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class RefPaysRepository extends ServiceEntityRepository
 {
@@ -26,7 +35,7 @@ class RefPaysRepository extends ServiceEntityRepository
      */
     public function ifExistTableRefPays()
     {
-        $entityManager = $this->getEntityManager();
+        //$entityManager = $this->getEntityManager();
 
         $stmt = $this->getEntityManager()->getConnection()->prepare("
             CREATE TABLE IF NOT EXISTS ref_pays (
@@ -44,7 +53,7 @@ class RefPaysRepository extends ServiceEntityRepository
                 personnel_archivage TEXT,
                 archivage BOOLEAN NOT NULL
             );");
-            $stmt->executeStatement();
+            $stmt->executeQuery([]);
             $stmt = $this->getEntityManager()->getConnection()->prepare("CREATE UNIQUE INDEX IF NOT EXISTS 
                 ref_pays_pkey ON ref_pays USING btree (uuid);");
             $stmt->executeQuery([]);
@@ -58,6 +67,24 @@ class RefPaysRepository extends ServiceEntityRepository
             $stmt = $this->getEntityManager()->getConnection()->prepare("CREATE INDEX IF NOT EXISTS
                 idx__ref_pays__archivage ON ref_pays USING btree (archivage);");
             $stmt->executeQuery([]);
+    }
+
+    public function insertValue(SirPays $sirPays)
+    {
+
+        $sql = "INSERT INTO ref_pays (uuid, id_pays_sir, libelle_pays_min, libelle_pays_maj, code_iso_3, nationalite,
+                date_heure_creation, date_heure_modification, date_heure_archivage, archivage, personnel_creation,
+                personnel_modification, personnel_archivage) VALUES ((?), (?), (?), (?), (?), (?), (?), (?), (?), (?),
+                (?), (?), (?));";
+        //dd($sirPays->getIdPays());
+      //  dd(Uuid::v7());
+        $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
+      //  var_dump($date->format('Y-m-d H:i:s p'));die;
+        $this->getEntityManager()->getConnection()->executeQuery($sql, [Uuid::v7(),
+            $sirPays->getIdPays(), $sirPays->getLibellePaysMin(), $sirPays->getLibellePaysMaj(),
+            $sirPays->getCodeIso3(), $sirPays->getNationalite(), $date->format('Y-m-d H:i:s p'), NULL,
+            $date->format('Y-m-d H:i:s p'), ($sirPays->getActual() === "1" ? "f" : "t"), "Administrateur", NULL,
+            NULL]);
     }
 
     //    /**
