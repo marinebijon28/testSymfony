@@ -62,10 +62,17 @@ class MajDatabaseCommand extends Command
         $refPays->ifExistTableRefPays();
         $sirPays = $this->_objectManagerSir->getRepository(SirPays::class)->findAll();
         for ($index = 0; $index < count($sirPays); $index++) {
-           // var_dump($refPays->findBy(["idPaysSir" => $sirPays[$index]->getIdPays()]));
-            if ($refPays->findBy(["idPaysSir" => $sirPays[$index]->getIdPays()]) === [])
+            if ($refPays->findOneBy([
+                    "idPaysSir" => $sirPays[$index]->getIdPays(),
+                    "libellePaysMin" => $sirPays[$index]->getLibellePaysMin(),
+                    "libellePaysMaj" => $sirPays[$index]->getLibellePaysMaj(),
+                    "codeIso3" => $sirPays[$index]->getCodeIso3(),
+                    "nationalite" => $sirPays[$index]->getNationalite(),
+                ]) == null){
                 $refPays->insertValue($sirPays[$index]);
-            print_r($sirPays[$index]->getIdPays());
+                printf("bon : %s\n", $sirPays[$index]->getId());
+            }
+            printf("%s\n", $sirPays[$index]->getId());
         }
         die;
        // dd($sirPays);
