@@ -9,8 +9,10 @@ use DateTime;
 use DateTimeZone;
 use App\Service\Sir\Entity\SirRegion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Driver\IBMDB2\Exception\PrepareFailed;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -18,9 +20,11 @@ use Symfony\Component\Uid\Uuid;
  */
 class RefRegionRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private ObjectManager $_objectManagerRef;
+    public function __construct(ManagerRegistry $managerRegistry)
     {
-        parent::__construct($registry, RefRegion::class);
+        parent::__construct($managerRegistry, RefRegion::class);
+        $this->_objectManagerRef = $managerRegistry->getManager('default');
     }
 
     /** ifExistTable
@@ -77,36 +81,32 @@ class RefRegionRepository extends ServiceEntityRepository
 //        $stmt->executeQuery([]);
     }
 
-//    public function insertValue(SirRegion $sirRegion)
-//    {
-//
-//       // dd($this->getEntityManager()->getRepository(RefRegion::class)->findOneBy([]));
-//     //   dd($refRegion->getRefPays());
-//    //    $uuidPays = $this->getEntityManager()->getRepository(RefPays::class)
-//    //        ->findOneBy(["libellePaysMaj" => "FRANCE"])->getUuid();
-////        $sql = "INSERT INTO ref_pays (ref_pays_pkey) VALUES (?)";
-////        $this->getEntityManager()->getConnection()->executeQuery($sql, [$uuidRegion]);
-//        $sql = "INSERT INTO ref_region (uuid, ref_pays, id_region_sir, libelle_region_min, libelle_region_maj,
-//            ajout_manuel, date_heure_creation, date_heure_modification, date_heure_archivage, archivage,
-//            personnel_creation, personnel_modification, personnel_archivage, fk_7a7b998f23ec7d29) VALUES ((?), (?), (?), (?), (?), (?), (?),
-//            (?), (?), (?), (?), (?), (?), (?));";
-//        $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
-//        $this->getEntityManager()->getConnection()->executeQuery($sql, [Uuid::v7(), $uuidPays,
-//            $sirRegion->getIdRegion(), $sirRegion->getLibelleRegionMin(), $sirRegion->getLibelleRegionMaj(),
-//            "f", $date->format('Y-m-d H:i:s p'), NULL, NULL, "f", "Administrateur", NULL, NULL, $uuidPays]);
-//    }
-
-    public function existsData(SirRegion $sir): bool
+    public function existsData(SirRegion $sir, RefPays $refPays): void
     {
         if ($this->findOneBy([
                 "idRegionSir" => $sir->getIdRegion(),
                 "libelleRegionMin" => $sir->getLibelleRegionMin(),
                 "libelleRegionMaj" => $sir->getLibelleRegionMaj()
-            ]) == null) {
-            return true;
-            //$this->insertValue($sir);
+            ]) == null)
+        {
+            $newRegion = new RefRegion();
+            $newRegion->setUuid(Uuid::v7());
+            $newRegion->setRefPays($refPays);
+            $newRegion->setIdRegionSir($sir->getIdRegion());
+            $newRegion->setLibelleRegionMin($sir->getLibelleRegionMin());
+            $newRegion->setLibelleRegionMaj($sir->getLibelleRegionMaj());
+            $newRegion->setAjoutManuel(false);
+            $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
+            $newRegion->setDateHeureCreation($date);
+            $newRegion->setPersonnelCreation("Administrateur");
+            $newRegion->setDateHeureModification(NULL);
+            $newRegion->setPersonnelModification(NULL);
+            $newRegion->setDateHeureArchivage(NULL);
+            $newRegion->setPersonnelArchivage(NULL);
+            $newRegion->setArchivage(false);
+            $this->_objectManagerRef->persist($newRegion);
+            $this->_objectManagerRef->flush();
         }
-        return false;
     }
 
     //    /**

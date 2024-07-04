@@ -79,7 +79,7 @@ class MajDatabaseCommand extends Command
             $progressBar->advance();
         }
         $progressBar->finish();
-        printf("\n");
+        printf("\n\n");
 
         // region
         $this->loopNameTable($output, "region");
@@ -93,30 +93,11 @@ class MajDatabaseCommand extends Command
             ->findOneBy(['libellePaysMaj' => "FRANCE"]);
         $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
         for ($index = 0; $index < count($resultSir); $index++) {
-            if ($ref->existsData($resultSir[$index]) === true);
-            {
-                $newRegion = new RefRegion();
-                $newRegion->setUuid(Uuid::v7());
-                $newRegion->setRefPays($refPays);
-                $newRegion->setIdRegionSir($resultSir[$index]->getIdRegion());
-                $newRegion->setLibelleRegionMin($resultSir[$index]->getLibelleRegionMin());
-                $newRegion->setLibelleRegionMaj($resultSir[$index]->getLibelleRegionMaj());
-                $newRegion->setAjoutManuel(false);
-                $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
-                $newRegion->setDateHeureCreation($date);
-                $newRegion->setPersonnelCreation("Administrateur");
-                $newRegion->setDateHeureModification(NULL);
-                $newRegion->setPersonnelModification(NULL);
-                $newRegion->setDateHeureArchivage(NULL);
-                $newRegion->setPersonnelArchivage(NULL);
-                $newRegion->setArchivage(false);
-                $this->_objectManagerRef->persist($newRegion);
-                $this->_objectManagerRef->flush();
-            }
+            $ref->existsData($resultSir[$index], $refPays);
             $progressBar->advance();
         }
         $progressBar->finish();
-        printf("\n");
+        printf("\n\n");
         // base de données
 //        $output->writeln([
 //            'Mise à jour de la table ref_pays.',
