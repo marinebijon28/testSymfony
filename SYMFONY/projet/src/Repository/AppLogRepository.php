@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\AppLog;
+use App\Entity\RefCommune;
 use App\Entity\RefDepartement;
 use App\Entity\RefPays;
 use App\Entity\RefRegion;
@@ -101,7 +102,7 @@ class AppLogRepository extends ServiceEntityRepository
         $newAppLog->setData("{
             \"uuid\" : \"" . $refDepartement->getUuid() . "\",
             \"ref_region\" : \"" . $refDepartement->getRefRegion()->getUuid() . "\",
-            \"id_departement_sir\" : \"" . $refDepartement->getIddepartementSir() . "\",
+            \"id_departement_sir\" : \"" . $refDepartement->getIdDepartementSir() . "\",
             \"libelle_departement_min\" : \"" . $refDepartement->getLibelleDepartementMin() . "\",
             \"libelle_departement_maj\" : \"" . $refDepartement->getLibelleDepartementMaj() . "\",
             \"personnel_creation\" : \"" . $refDepartement->getPersonnelCreation() . "\",
@@ -114,6 +115,32 @@ class AppLogRepository extends ServiceEntityRepository
             \"date_heure_archivage\" : \"" . ($refDepartement->getDateHeureArchivage() == null ? null :
                 $refDepartement->getDateHeureArchivage()->format('Y-m-d H:i:s p')) . "\",
             \"archivage\" : \"" . $refDepartement->isArchivage() . "\",
+        }");
+    }
+
+    public function dataRefCommune(AppLog $newAppLog, RefCommune $RefCommune) {
+        $newAppLog->setData("{
+            \"uuid\" : \"" . $RefCommune->getUuid() . "\",
+            \"ref_pays\" : \"" . $RefCommune->getRefPays()->getUuid() . "\",
+            \"ref_region\" : \"" . $RefCommune->getRefRegion()->getUuid() . "\",
+            \"ref_departement\" : \"" . $RefCommune->getRefDepartement()->getUuid() . "\",
+            \"id_commune_sir\" : \"" . $RefCommune->getIdCommuneSir() . "\",
+            \"ajout_manuel\" : \"" . $RefCommune->isAjoutManuel() . "\",
+            \"libelle_commune_min\" : \"" . $RefCommune->getLibelleCommuneMin() . "\",
+            \"libelle_commune_maj\" : \"" . $RefCommune->getLibelleCommuneMaj() . "\",
+            \"codes_postaux\" : \"" . $RefCommune->getCodesPostaux() . "\",
+            \"epsg4326_lat\" : \"" . $RefCommune->getEpsg4326Lat() . "\",
+            \"epsg4326_long\" : \"" . $RefCommune->getEpsg4326Long() . "\",
+            \"personnel_creation\" : \"" . $RefCommune->getPersonnelCreation() . "\",
+            \"personnel_modification\" : \"" . $RefCommune->getPersonnelModification() . "\",
+            \"personnel_archivage\" : \"" . $RefCommune->getPersonnelArchivage() . "\",
+            \"date_heure_creation\" : \"" . ($RefCommune->getDateHeureCreation() == null ? null :
+                $RefCommune->getDateHeureCreation()->format('Y-m-d H:i:s p')) . "\",
+            \"date_heure_modification\" : \"" . ($RefCommune->getDateHeureModification() == null ? null :
+                $RefCommune->getDateHeureModification()->format('Y-m-d H:i:s p')) . "\",
+            \"date_heure_archivage\" : \"" . ($RefCommune->getDateHeureArchivage() == null ? null :
+                $RefCommune->getDateHeureArchivage()->format('Y-m-d H:i:s p')) . "\",
+            \"archivage\" : \"" . $RefCommune->isArchivage() . "\",
         }");
     }
 

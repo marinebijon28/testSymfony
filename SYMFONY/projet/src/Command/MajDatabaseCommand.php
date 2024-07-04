@@ -174,13 +174,25 @@ class MajDatabaseCommand extends Command
         $progressBar = new ProgressBar($output, count($resultSir));
         $progressBar->start();
         for ($index = 0; $index < count($resultSir); $index++) {
-
+            $time_start = microtime(true);
             $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)
                 ->findOneBy(["idRegionSir" => $resultSir[$index]->getIdRegion()]);
-           $refDepartement = $this->_objectManagerRef->getRepository(RefDepartement::class)
+            $refDepartement = $this->_objectManagerRef->getRepository(RefDepartement::class)
                 ->findOneBy(["idDepartementSir" => $resultSir[$index]->getIdDepartement()]);
-            $ref->existsData($resultSir[$index], $refPays, $refRegion, $refDepartement);
+            $refCommune = $ref->existsData($resultSir[$index], $refPays, $refRegion, $refDepartement);
             $progressBar->advance();
+            $time_end = microtime(true);
+            $time = $time_end - $time_start;
+            $newAppLog = new AppLog();
+            $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
+                "CREATION_ENREGISTREMENT", "ref_commune");
+            $appLog->dataRefCommune($newAppLog, $refCommune);
+            if ($refCommune->isArchivage() === TRUE) {
+                $newAppLog = new AppLog();
+                $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
+                    "ARCHIVAGE_ENREGISTREMENT", "ref_commune");
+                $appLog->dataRefCommune($newAppLog, $refCommune);
+            }
         }
         $progressBar->finish();
         printf("\n\n");

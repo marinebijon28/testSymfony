@@ -99,17 +99,18 @@ class RefCommuneRepository extends ServiceEntityRepository
     }
 
     public function existsData(SirCommune $sir, RefPays $refPays, RefRegion $refRegion, RefDepartement $refDepartement):
-    void
+    RefCommune
     {
         ini_set('memory_limit', '65536M');
-        if ($this->findOneBy([
-                "idCommuneSir" => $sir->getIdCommune(),
-                "libelleCommuneMin" => $sir->getLibelleCommuneMin(),
-                "libelleCommuneMaj" => $sir->getLibelleCommuneMaj(),
-                "codesPostaux" => $sir->getCodesPostaux(),
-                "epsg4326Lat" => $sir->getEpsg4326Lat(),
-                "epsg4326Long" => $sir->getEpsg4326Long(),
-            ]) == null)
+        $res = $this->findOneBy([
+            "idCommuneSir" => $sir->getIdCommune(),
+            "libelleCommuneMin" => $sir->getLibelleCommuneMin(),
+            "libelleCommuneMaj" => $sir->getLibelleCommuneMaj(),
+            "codesPostaux" => $sir->getCodesPostaux(),
+            "epsg4326Lat" => $sir->getEpsg4326Lat(),
+            "epsg4326Long" => $sir->getEpsg4326Long(),
+        ]);
+        if ($res == null)
         {
             $newCommune = new RefCommune();
             $newCommune->setUuid(Uuid::v7());
@@ -133,7 +134,9 @@ class RefCommuneRepository extends ServiceEntityRepository
             $newCommune->setArchivage(FALSE);
             $this->_objectManagerRef->persist($newCommune);
             $this->_objectManagerRef->flush();
+            return $newCommune;
         }
+        return $res;
     }
 
     //    /**
