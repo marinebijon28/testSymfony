@@ -79,6 +79,11 @@ class RefRegion
         return $this->uuid;
     }
 
+    public function setUuid(): ?Uuid
+    {
+        return $this->uuid;
+    }
+
     public function getIdRegionSir(): ?string
     {
         return $this->idRegionSir;

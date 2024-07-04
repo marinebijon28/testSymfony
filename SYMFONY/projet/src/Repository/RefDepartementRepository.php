@@ -17,14 +17,14 @@ class RefDepartementRepository extends ServiceEntityRepository
         parent::__construct($registry, RefDepartement::class);
     }
 
-    /** ifExistTableRefDepartement
+    /** ifExistTable
      *
      * checks if the table is created if not it created it
      *
      * @return void
      * @throws Exception
      */
-    public function ifExistTableRefDepartement()
+    public function ifExistTable()
     {
         $entityManager = $this->getEntityManager();
 

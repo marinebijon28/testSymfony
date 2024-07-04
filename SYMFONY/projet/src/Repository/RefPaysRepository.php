@@ -26,14 +26,14 @@ class RefPaysRepository extends ServiceEntityRepository
         parent::__construct($registry, RefPays::class);
     }
 
-    /** ifExistTableRefPays
+    /** ifExistTable
      *
      * checks if the table is created if not it created it
      *
      * @return void
      * @throws Exception
      */
-    public function ifExistTableRefPays()
+    public function ifExistTable()
     {
         //$entityManager = $this->getEntityManager();
 
@@ -73,18 +73,28 @@ class RefPaysRepository extends ServiceEntityRepository
     {
 
         $sql = "INSERT INTO ref_pays (uuid, id_pays_sir, libelle_pays_min, libelle_pays_maj, code_iso_3, nationalite,
-                date_heure_creation, date_heure_modification, date_heure_archivage, archivage, personnel_creation,
-                personnel_modification, personnel_archivage) VALUES ((?), (?), (?), (?), (?), (?), (?), (?), (?), (?),
-                (?), (?), (?));";
-        //dd($sirPays->getIdPays());
-      //  dd(Uuid::v7());
+            date_heure_creation, date_heure_modification, date_heure_archivage, archivage, personnel_creation,
+            personnel_modification, personnel_archivage) VALUES ((?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?),
+            (?), (?));";
         $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
-      //  var_dump($date->format('Y-m-d H:i:s p'));die;
-        $this->getEntityManager()->getConnection()->executeQuery($sql, [Uuid::v7(),
-            $sirPays->getIdPays(), $sirPays->getLibellePaysMin(), $sirPays->getLibellePaysMaj(),
-            $sirPays->getCodeIso3(), $sirPays->getNationalite(), $date->format('Y-m-d H:i:s p'), NULL,
+        $this->getEntityManager()->getConnection()->executeQuery($sql, [Uuid::v7(), $sirPays->getIdPays(),
+            $sirPays->getLibellePaysMin(), $sirPays->getLibellePaysMaj(), $sirPays->getCodeIso3(),
+            $sirPays->getNationalite(), $date->format('Y-m-d H:i:s p'), NULL,
             $date->format('Y-m-d H:i:s p'), ($sirPays->getActual() === "1" ? "f" : "t"), "Administrateur", NULL,
             NULL]);
+    }
+
+    public function existsData(SirPays $sir,)
+    {
+        if ($this->findOneBy([
+                "idPaysSir" => $sir->getIdPays(),
+                "libellePaysMin" => $sir->getLibellePaysMin(),
+                "libellePaysMaj" => $sir->getLibellePaysMaj(),
+                "codeIso3" => $sir->getCodeIso3(),
+                "nationalite" => $sir->getNationalite(),
+            ]) == null) {
+            $this->insertValue($sir);
+        }
     }
 
     //    /**

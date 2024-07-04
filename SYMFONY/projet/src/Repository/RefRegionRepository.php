@@ -2,10 +2,16 @@
 
 namespace App\Repository;
 
+use App\Entity\RefPays;
 use App\Entity\RefRegion;
+use App\Service\Sir\Entity\SirPays;
+use DateTime;
+use DateTimeZone;
+use App\Service\Sir\Entity\SirRegion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<RefRegion>
@@ -17,14 +23,14 @@ class RefRegionRepository extends ServiceEntityRepository
         parent::__construct($registry, RefRegion::class);
     }
 
-    /** ifExistTableRefRegion
+    /** ifExistTable
      *
      * checks if the table is created if not it created it
      *
      * @return void
      * @throws Exception
      */
-    public function ifExistTableRefRegion()
+    public function ifExistTable()
     {
         $entityManager = $this->getEntityManager();
         // fk ref_pays
@@ -69,6 +75,38 @@ class RefRegionRepository extends ServiceEntityRepository
 //        $stmt = $this->getEntityManager()->getConnection()->prepare("ALTER TABLE public.ref_region ADD CONSTRAINT
 //            ref_region_pkey PRIMARY KEY (uuid);");
 //        $stmt->executeQuery([]);
+    }
+
+//    public function insertValue(SirRegion $sirRegion)
+//    {
+//
+//       // dd($this->getEntityManager()->getRepository(RefRegion::class)->findOneBy([]));
+//     //   dd($refRegion->getRefPays());
+//    //    $uuidPays = $this->getEntityManager()->getRepository(RefPays::class)
+//    //        ->findOneBy(["libellePaysMaj" => "FRANCE"])->getUuid();
+////        $sql = "INSERT INTO ref_pays (ref_pays_pkey) VALUES (?)";
+////        $this->getEntityManager()->getConnection()->executeQuery($sql, [$uuidRegion]);
+//        $sql = "INSERT INTO ref_region (uuid, ref_pays, id_region_sir, libelle_region_min, libelle_region_maj,
+//            ajout_manuel, date_heure_creation, date_heure_modification, date_heure_archivage, archivage,
+//            personnel_creation, personnel_modification, personnel_archivage, fk_7a7b998f23ec7d29) VALUES ((?), (?), (?), (?), (?), (?), (?),
+//            (?), (?), (?), (?), (?), (?), (?));";
+//        $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
+//        $this->getEntityManager()->getConnection()->executeQuery($sql, [Uuid::v7(), $uuidPays,
+//            $sirRegion->getIdRegion(), $sirRegion->getLibelleRegionMin(), $sirRegion->getLibelleRegionMaj(),
+//            "f", $date->format('Y-m-d H:i:s p'), NULL, NULL, "f", "Administrateur", NULL, NULL, $uuidPays]);
+//    }
+
+    public function existsData(SirRegion $sir): bool
+    {
+        if ($this->findOneBy([
+                "idRegionSir" => $sir->getIdRegion(),
+                "libelleRegionMin" => $sir->getLibelleRegionMin(),
+                "libelleRegionMaj" => $sir->getLibelleRegionMaj()
+            ]) == null) {
+            return true;
+            //$this->insertValue($sir);
+        }
+        return false;
     }
 
     //    /**
