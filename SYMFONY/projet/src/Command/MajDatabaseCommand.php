@@ -6,6 +6,7 @@ use App\Entity\RefCommune;
 use App\Entity\RefDepartement;
 use App\Entity\RefPays;
 use App\Entity\RefRegion;
+use App\Service\Sir\Entity\SirDepartement;
 use App\Service\Sir\Entity\SirPays;
 use App\Service\Sir\Entity\SirRegion;
 use DateTime;
@@ -90,45 +91,39 @@ class MajDatabaseCommand extends Command
         $progressBar = new ProgressBar($output, count($resultSir));
         $progressBar->start();
         $refPays = $this->_objectManagerRef->getRepository(RefPays::class)
-            ->findOneBy(['libellePaysMaj' => "FRANCE"]);
-        $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
+            ->findOneBy(["libellePaysMaj" => "FRANCE"]);
         for ($index = 0; $index < count($resultSir); $index++) {
             $ref->existsData($resultSir[$index], $refPays);
             $progressBar->advance();
         }
         $progressBar->finish();
         printf("\n\n");
-        // base de données
-//        $output->writeln([
-//            'Mise à jour de la table ref_pays.',
-//            '---------------------------------',
-//            'vérification des données : sir_pays -> ref_pays'
-//        ]);
-//        $refPays = $this->_objectManagerRef->getRepository(RefPays::class);
-//        $refPays->ifExistTable();
-//        $sirPays = $this->_objectManagerSir->getRepository(SirPays::class)->findAll();
-//        $progressBar = new ProgressBar($output, count($sirPays));
-//        $progressBar->start();
-//        for ($index = 0; $index < count($sirPays); $index++) {
-//            if ($refPays->findOneBy([
-//                    "idPaysSir" => $sirPays[$index]->getIdPays(),
-//                    "libellePaysMin" => $sirPays[$index]->getLibellePaysMin(),
-//                    "libellePaysMaj" => $sirPays[$index]->getLibellePaysMaj(),
-//                    "codeIso3" => $sirPays[$index]->getCodeIso3(),
-//                    "nationalite" => $sirPays[$index]->getNationalite(),
-//                ]) == null){
-//                $refPays->insertValue($sirPays[$index]);
-//               // printf("bon : %s\n", $sirPays[$index]->getId());
-//            }
-//            $progressBar->advance();
-//            // printf("%s\n", $sirPays[$index]->getId());
-//        }
-//        $progressBar->finish();
-//        printf("\n");
+
+        // departement
+        $ref = $this->_objectManagerRef->getRepository(RefDepartement::class);
+        $sir = $this->_objectManagerSir->getRepository(SirDepartement::class);
+        $ref->ifExistTable();
+        // region
+        $this->loopNameTable($output, "departement");
+        $resultSir = $sir->findAll();
+        $progressBar = new ProgressBar($output, count($resultSir));
+        $progressBar->start();
 
 
-        $refDepartement = $this->_objectManagerRef->getRepository(RefDepartement::class)
-            ->ifExistTable();
+        $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
+        for ($index = 0; $index < count($resultSir); $index++) {
+
+
+
+            $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)
+                ->findOneBy(["idRegionSir" => $resultSir[$index]->getIdRegion()]);
+            $ref->existsData($resultSir[$index], $refRegion);
+            $progressBar->advance();
+        }
+        $progressBar->finish();
+        printf("\n\n");
+
+
         $refCommune = $this->_objectManagerRef->getRepository(RefCommune::class)->ifExistTable();
 
 

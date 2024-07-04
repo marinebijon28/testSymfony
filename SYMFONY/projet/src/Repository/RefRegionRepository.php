@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\RefDepartement;
 use App\Entity\RefPays;
 use App\Entity\RefRegion;
+use App\Service\Sir\Entity\SirDepartement;
 use App\Service\Sir\Entity\SirPays;
 use DateTime;
 use DateTimeZone;
@@ -87,8 +89,7 @@ class RefRegionRepository extends ServiceEntityRepository
                 "idRegionSir" => $sir->getIdRegion(),
                 "libelleRegionMin" => $sir->getLibelleRegionMin(),
                 "libelleRegionMaj" => $sir->getLibelleRegionMaj()
-            ]) == null)
-        {
+            ]) == null) {
             $newRegion = new RefRegion();
             $newRegion->setUuid(Uuid::v7());
             $newRegion->setRefPays($refPays);
@@ -96,7 +97,7 @@ class RefRegionRepository extends ServiceEntityRepository
             $newRegion->setLibelleRegionMin($sir->getLibelleRegionMin());
             $newRegion->setLibelleRegionMaj($sir->getLibelleRegionMaj());
             $newRegion->setAjoutManuel(false);
-            $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
+            $date = new DateTime("now", new DateTimeZone('Europe/Dublin'));
             $newRegion->setDateHeureCreation($date);
             $newRegion->setPersonnelCreation("Administrateur");
             $newRegion->setDateHeureModification(NULL);

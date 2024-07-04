@@ -3,18 +3,28 @@
 namespace App\Repository;
 
 use App\Entity\RefDepartement;
+use App\Entity\RefPays;
+use App\Entity\RefRegion;
+use App\Service\Sir\Entity\SirDepartement;
+use App\Service\Sir\Entity\SirRegion;
+use DateTime;
+use DateTimeZone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<RefDepartement>
  */
 class RefDepartementRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private ObjectManager $_objectManagerRef;
+    public function __construct(ManagerRegistry $managerRegistry)
     {
-        parent::__construct($registry, RefDepartement::class);
+        parent::__construct($managerRegistry, RefDepartement::class);
+        $this->_objectManagerRef = $managerRegistry->getManager('default');
     }
 
     /** ifExistTable
@@ -68,6 +78,36 @@ class RefDepartementRepository extends ServiceEntityRepository
             ref_departement_pkey ON public.ref_departement USING btree (uuid);");
         $stmt->executeQuery([]);
     }
+
+    public function existsData(SirDepartement $sir, RefRegion $refRegion): void
+    {
+        if ($this->findOneBy([
+                "idDepartementSir" => $sir->getIdRegion(),
+                "libelleDepartementMin" => $sir->getLibelleDepartementMin(),
+                "libelleDepartementMaj" => $sir->getLibelleDepartementMaj()
+            ]) == null)
+        {
+            $newDepartement = new RefDepartement();
+            $newDepartement->setUuid(Uuid::v7());
+            $newDepartement->setRefRegion($refRegion);
+            $newDepartement->setIdDepartementSir($sir->getIdDepartement());
+            $newDepartement->setNumero("");
+            $newDepartement->setLibelleDepartementMin($sir->getLibelleDepartementMin());
+            $newDepartement->setLibelleDepartementMaj($sir->getLibelleDepartementMaj());
+            $date = new DateTime("now", new DateTimeZone('Europe/Dublin'));
+            $newDepartement->setDateHeureCreation($date);
+            $newDepartement->setPersonnelCreation("Administrateur");
+            $newDepartement->setDateHeureModification(NULL);
+            $newDepartement->setPersonnelModification(NULL);
+            $newDepartement->setDateHeureArchivage(NULL);
+            $newDepartement->setPersonnelArchivage(NULL);
+            $newDepartement->setArchivage(false);
+            $this->_objectManagerRef->persist($newDepartement);
+            $this->_objectManagerRef->flush();
+        }
+    }
+
+
 
     //    /**
     //     * @return RefDepartement[] Returns an array of RefDepartement objects
