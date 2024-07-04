@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\AppLog;
 use App\Entity\RefCommune;
 use App\Entity\RefDepartement;
 use App\Entity\RefPays;
@@ -69,18 +70,33 @@ class MajDatabaseCommand extends Command
 //        $returnCode = $this->getApplication()->Run($greetInput);
 
 
-
         // Pays
         $this->loopNameTable($output, "pays");
         $ref = $this->_objectManagerRef->getRepository(RefPays::class);
         $sir = $this->_objectManagerSir->getRepository(SirPays::class);
+        $appLog = $this->_objectManagerRef->getRepository(AppLog::class);
+        $appLog->ifExistTable();
+
         $ref->ifExistTable();
         $resultSir = $sir->findAll();
         $progressBar = new ProgressBar($output, count($resultSir));
         $progressBar->start();
         for ($index = 0; $index < count($resultSir); $index++) {
-            $ref->existsData($resultSir[$index]);
+            $time_start = microtime(true);
+            $refPays = $ref->existsData($resultSir[$index]);
             $progressBar->advance();
+            $time_end = microtime(true);
+            $time = $time_end - $time_start;
+            $newAppLog = new AppLog();
+            $appLog->fillingTheLogTableRefPays($refPays->getUuid(), $newAppLog, (string)$time,
+                "CREATION_ENREGISTREMENT", "ref_pays");
+            $appLog->dataRefPays($newAppLog, $refPays);
+            if ($refPays->isArchivage() === TRUE) {
+                $newAppLog = new AppLog();
+                $appLog->fillingTheLogTableRefPays($refPays->getUuid(), $newAppLog, (string)$time,
+                    "ARCHIVAGE_ENREGISTREMENT", "ref_pays");
+                $appLog->dataRefPays($newAppLog, $refPays);
+            }
         }
         $progressBar->finish();
         printf("\n\n");
@@ -89,6 +105,7 @@ class MajDatabaseCommand extends Command
 
         $refPays = $this->_objectManagerRef->getRepository(RefPays::class)
             ->findOneBy(["libellePaysMaj" => "FRANCE"]);
+
 
         // region
         $this->loopNameTable($output, "region");
@@ -100,8 +117,10 @@ class MajDatabaseCommand extends Command
         $progressBar->start();
 
         for ($index = 0; $index < count($resultSir); $index++) {
+           // $time_start = microtime(true);
             $ref->existsData($resultSir[$index], $refPays);
             $progressBar->advance();
+            //$time_end = microtime(true);
         }
         $progressBar->finish();
         printf("\n\n");

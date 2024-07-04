@@ -77,6 +77,11 @@ class RefPays
         return $this->uuid;
     }
 
+    public function setUuid(Uuid $uuid): void
+    {
+        $this->uuid = $uuid;
+    }
+
     public function getIdPaysSir(): ?string
     {
         return $this->idPaysSir;
@@ -184,6 +189,7 @@ class RefPays
 
         return $this;
     }
+
 
     /**
      * @return Collection<int, RefRegion>

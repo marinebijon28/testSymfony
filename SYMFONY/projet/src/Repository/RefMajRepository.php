@@ -26,8 +26,6 @@ class RefMajRepository extends ServiceEntityRepository
      */
     public function ifExistTable()
     {
-        $entityManager = $this->getEntityManager();
-
         $stmt = $this->getEntityManager()->getConnection()->prepare("
             CREATE TABLE IF NOT EXISTS ref_maj (
                 uuid UUID PRIMARY KEY NOT NULL,

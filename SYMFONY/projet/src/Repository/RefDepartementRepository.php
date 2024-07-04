@@ -36,8 +36,6 @@ class RefDepartementRepository extends ServiceEntityRepository
      */
     public function ifExistTable()
     {
-        $entityManager = $this->getEntityManager();
-
         $stmt = $this->getEntityManager()->getConnection()->prepare("
             CREATE TABLE IF NOT EXISTS ref_departement (
                 uuid UUID PRIMARY KEY NOT NULL,
@@ -91,7 +89,7 @@ class RefDepartementRepository extends ServiceEntityRepository
             $newDepartement->setUuid(Uuid::v7());
             $newDepartement->setRefRegion($refRegion);
             $newDepartement->setIdDepartementSir($sir->getIdDepartement());
-            $newDepartement->setNumero("");
+            $newDepartement->setNumero(NULL);
             $newDepartement->setLibelleDepartementMin($sir->getLibelleDepartementMin());
             $newDepartement->setLibelleDepartementMaj($sir->getLibelleDepartementMaj());
             $date = new DateTime("now", new DateTimeZone('Europe/Dublin'));
@@ -101,7 +99,7 @@ class RefDepartementRepository extends ServiceEntityRepository
             $newDepartement->setPersonnelModification(NULL);
             $newDepartement->setDateHeureArchivage(NULL);
             $newDepartement->setPersonnelArchivage(NULL);
-            $newDepartement->setArchivage(false);
+            $newDepartement->setArchivage(FALSE);
             $this->_objectManagerRef->persist($newDepartement);
             $this->_objectManagerRef->flush();
         }

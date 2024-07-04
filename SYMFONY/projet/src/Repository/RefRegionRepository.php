@@ -38,8 +38,6 @@ class RefRegionRepository extends ServiceEntityRepository
      */
     public function ifExistTable()
     {
-        $entityManager = $this->getEntityManager();
-        // fk ref_pays
         $stmt = $this->getEntityManager()->getConnection()->prepare("
             CREATE TABLE IF NOT EXISTS ref_region (
                 uuid UUID PRIMARY KEY NOT NULL,
@@ -56,7 +54,6 @@ class RefRegionRepository extends ServiceEntityRepository
                 personnel_archivage TEXT,
                 archivage BOOLEAN NOT NULL,
                 CONSTRAINT fk_7a7b998f23ec7d29 FOREIGN KEY (ref_pays) REFERENCES ref_pays(uuid)
-/*                CONSTRAINT ref_region_pkey PRIMARY KEY (uuid) */
             );");
         $stmt->executeStatement();
         $stmt = $this->getEntityManager()->getConnection()->prepare("CREATE INDEX IF NOT EXISTS 
@@ -96,7 +93,7 @@ class RefRegionRepository extends ServiceEntityRepository
             $newRegion->setIdRegionSir($sir->getIdRegion());
             $newRegion->setLibelleRegionMin($sir->getLibelleRegionMin());
             $newRegion->setLibelleRegionMaj($sir->getLibelleRegionMaj());
-            $newRegion->setAjoutManuel(false);
+            $newRegion->setAjoutManuel(FALSE);
             $date = new DateTime("now", new DateTimeZone('Europe/Dublin'));
             $newRegion->setDateHeureCreation($date);
             $newRegion->setPersonnelCreation("Administrateur");
@@ -104,7 +101,7 @@ class RefRegionRepository extends ServiceEntityRepository
             $newRegion->setPersonnelModification(NULL);
             $newRegion->setDateHeureArchivage(NULL);
             $newRegion->setPersonnelArchivage(NULL);
-            $newRegion->setArchivage(false);
+            $newRegion->setArchivage(FALSE);
             $this->_objectManagerRef->persist($newRegion);
             $this->_objectManagerRef->flush();
         }

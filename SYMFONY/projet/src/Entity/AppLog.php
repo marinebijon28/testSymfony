@@ -52,6 +52,11 @@ class AppLog
         return $this->uuid;
     }
 
+    public function setUuid(): ?Uuid
+    {
+        return $this->uuid;
+    }
+
     public function getDateHeureAction(): ?\DateTimeInterface
     {
         return $this->dateHeureAction;

@@ -37,8 +37,6 @@ class RefCommuneRepository extends ServiceEntityRepository
      */
     public function ifExistTable()
     {
-        $entityManager = $this->getEntityManager();
-
         $stmt = $this->getEntityManager()->getConnection()->prepare("
             CREATE TABLE IF NOT EXISTS ref_commune (
                 uuid UUID PRIMARY KEY NOT NULL,
@@ -132,7 +130,7 @@ class RefCommuneRepository extends ServiceEntityRepository
             $newCommune->setPersonnelModification(NULL);
             $newCommune->setDateHeureArchivage(NULL);
             $newCommune->setPersonnelArchivage(NULL);
-            $newCommune->setArchivage(false);
+            $newCommune->setArchivage(FALSE);
             $this->_objectManagerRef->persist($newCommune);
             $this->_objectManagerRef->flush();
         }
