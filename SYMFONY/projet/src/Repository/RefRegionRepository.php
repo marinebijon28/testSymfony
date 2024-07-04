@@ -42,7 +42,7 @@ class RefRegionRepository extends ServiceEntityRepository
         // fk ref_pays
         $stmt = $this->getEntityManager()->getConnection()->prepare("
             CREATE TABLE IF NOT EXISTS ref_region (
-                uuid uuid PRIMARY KEY NOT NULL,
+                uuid UUID PRIMARY KEY NOT NULL,
                 ref_pays uuid NOT NULL, 
                 id_region_sir TEXT,
                 libelle_region_min TEXT,

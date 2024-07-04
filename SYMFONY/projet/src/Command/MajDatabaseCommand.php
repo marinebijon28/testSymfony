@@ -6,6 +6,7 @@ use App\Entity\RefCommune;
 use App\Entity\RefDepartement;
 use App\Entity\RefPays;
 use App\Entity\RefRegion;
+use App\Service\Sir\Entity\SirCommune;
 use App\Service\Sir\Entity\SirDepartement;
 use App\Service\Sir\Entity\SirPays;
 use App\Service\Sir\Entity\SirRegion;
@@ -67,6 +68,8 @@ class MajDatabaseCommand extends Command
 //        ]);
 //        $returnCode = $this->getApplication()->Run($greetInput);
 
+
+
         // Pays
         $this->loopNameTable($output, "pays");
         $ref = $this->_objectManagerRef->getRepository(RefPays::class);
@@ -82,6 +85,11 @@ class MajDatabaseCommand extends Command
         $progressBar->finish();
         printf("\n\n");
 
+
+
+        $refPays = $this->_objectManagerRef->getRepository(RefPays::class)
+            ->findOneBy(["libellePaysMaj" => "FRANCE"]);
+
         // region
         $this->loopNameTable($output, "region");
         $ref = $this->_objectManagerRef->getRepository(RefRegion::class);
@@ -90,8 +98,7 @@ class MajDatabaseCommand extends Command
         $resultSir = $sir->findAll();
         $progressBar = new ProgressBar($output, count($resultSir));
         $progressBar->start();
-        $refPays = $this->_objectManagerRef->getRepository(RefPays::class)
-            ->findOneBy(["libellePaysMaj" => "FRANCE"]);
+
         for ($index = 0; $index < count($resultSir); $index++) {
             $ref->existsData($resultSir[$index], $refPays);
             $progressBar->advance();
@@ -108,13 +115,7 @@ class MajDatabaseCommand extends Command
         $resultSir = $sir->findAll();
         $progressBar = new ProgressBar($output, count($resultSir));
         $progressBar->start();
-
-
-        $date = new DateTime("now", new DateTimeZone('Europe/Dublin') );
         for ($index = 0; $index < count($resultSir); $index++) {
-
-
-
             $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)
                 ->findOneBy(["idRegionSir" => $resultSir[$index]->getIdRegion()]);
             $ref->existsData($resultSir[$index], $refRegion);
@@ -123,8 +124,25 @@ class MajDatabaseCommand extends Command
         $progressBar->finish();
         printf("\n\n");
 
+        // commune
+        $ref = $this->_objectManagerRef->getRepository(RefCommune::class);
+        $sir = $this->_objectManagerSir->getRepository(SirCommune::class);
+        $ref->ifExistTable();
+        $this->loopNameTable($output, "commune");
+        $resultSir = $sir->findAll();
+        $progressBar = new ProgressBar($output, count($resultSir));
+        $progressBar->start();
+        for ($index = 0; $index < count($resultSir); $index++) {
 
-        $refCommune = $this->_objectManagerRef->getRepository(RefCommune::class)->ifExistTable();
+            $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)
+                ->findOneBy(["idRegionSir" => $resultSir[$index]->getIdRegion()]);
+           $refDepartement = $this->_objectManagerRef->getRepository(RefDepartement::class)
+                ->findOneBy(["idDepartementSir" => $resultSir[$index]->getIdDepartement()]);
+            $ref->existsData($resultSir[$index], $refPays, $refRegion, $refDepartement);
+            $progressBar->advance();
+        }
+        $progressBar->finish();
+        printf("\n\n");
 
 
 

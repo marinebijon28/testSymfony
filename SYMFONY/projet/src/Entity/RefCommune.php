@@ -83,6 +83,11 @@ class RefCommune
         return $this->uuid;
     }
 
+    public function setUuid(): ?Uuid
+    {
+        return $this->uuid;
+    }
+
     public function getIdCommuneSir(): ?string
     {
         return $this->idCommuneSir;

@@ -3,18 +3,29 @@
 namespace App\Repository;
 
 use App\Entity\RefCommune;
+use App\Entity\RefDepartement;
+use App\Entity\RefPays;
+use App\Entity\RefRegion;
+use App\Service\Sir\Entity\SirCommune;
+use App\Service\Sir\Entity\SirDepartement;
+use DateTime;
+use DateTimeZone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<RefCommune>
  */
 class RefCommuneRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private ObjectManager $_objectManagerRef;
+    public function __construct(ManagerRegistry $managerRegistry)
     {
-        parent::__construct($registry, RefCommune::class);
+        parent::__construct($managerRegistry, RefCommune::class);
+        $this->_objectManagerRef = $managerRegistry->getManager('default');
     }
 
     /** ifExistTable
@@ -30,7 +41,7 @@ class RefCommuneRepository extends ServiceEntityRepository
 
         $stmt = $this->getEntityManager()->getConnection()->prepare("
             CREATE TABLE IF NOT EXISTS ref_commune (
-                uuid uuid PRIMARY KEY NOT NULL,
+                uuid UUID PRIMARY KEY NOT NULL,
                 ref_pays uuid NOT NULL,
                 ref_region uuid NOT NULL,
                 ref_departement uuid,
@@ -38,9 +49,9 @@ class RefCommuneRepository extends ServiceEntityRepository
                 ajout_manuel BOOLEAN NOT NULL,
                 libelle_commune_min TEXT,
                 libelle_commune_maj TEXT,
-                code_postaux TEXT,
-                epsg_4326_lat TEXT,
-                epsg_4326_long TEXT,
+                codes_postaux TEXT,
+                epsg4326_lat TEXT,
+                epsg4326_long TEXT,
                 date_heure_creation TIMESTAMP(0) WITH TIME ZONE NOT NULL,
                 personnel_creation TEXT NOT NULL,
                 date_heure_modification TIMESTAMP(0) WITH TIME ZONE,
@@ -87,6 +98,44 @@ class RefCommuneRepository extends ServiceEntityRepository
 //        $stmt = $this->getEntityManager()->getConnection()->prepare("ALTER TABLE public.ref_commune ADD CONSTRAINT
 //            fk_26f6823e3b7fa3ef FOREIGN KEY (ref_departement) REFERENCES ref_departement(uuid);");
 //        $stmt->executeQuery([]);
+    }
+
+    public function existsData(SirCommune $sir, RefPays $refPays, RefRegion $refRegion, RefDepartement $refDepartement):
+    void
+    {
+        ini_set('memory_limit', '65536M');
+        if ($this->findOneBy([
+                "idCommuneSir" => $sir->getIdCommune(),
+                "libelleCommuneMin" => $sir->getLibelleCommuneMin(),
+                "libelleCommuneMaj" => $sir->getLibelleCommuneMaj(),
+                "codesPostaux" => $sir->getCodesPostaux(),
+                "epsg4326Lat" => $sir->getEpsg4326Lat(),
+                "epsg4326Long" => $sir->getEpsg4326Long(),
+            ]) == null)
+        {
+            $newCommune = new RefCommune();
+            $newCommune->setUuid(Uuid::v7());
+            $newCommune->setRefPays($refPays);
+            $newCommune->setRefRegion($refRegion);
+            $newCommune->setRefDepartement($refDepartement);
+            $newCommune->setIdCommuneSir($sir->getIdCommune());
+            $newCommune->setAjoutManuel(false);
+            $newCommune->setLibelleCommuneMin($sir->getLibelleCommuneMin());
+            $newCommune->setLibelleCommuneMaj($sir->getLibelleCommuneMaj());
+            $newCommune->setCodesPostaux($sir->getCodesPostaux());
+            $newCommune->setEpsg4326Lat($sir->getEpsg4326Lat());
+            $newCommune->setEpsg4326Long($sir->getEpsg4326Long());
+            $date = new DateTime("now", new DateTimeZone('Europe/Dublin'));
+            $newCommune->setDateHeureCreation($date);
+            $newCommune->setPersonnelCreation("Administrateur");
+            $newCommune->setDateHeureModification(NULL);
+            $newCommune->setPersonnelModification(NULL);
+            $newCommune->setDateHeureArchivage(NULL);
+            $newCommune->setPersonnelArchivage(NULL);
+            $newCommune->setArchivage(false);
+            $this->_objectManagerRef->persist($newCommune);
+            $this->_objectManagerRef->flush();
+        }
     }
 
     //    /**

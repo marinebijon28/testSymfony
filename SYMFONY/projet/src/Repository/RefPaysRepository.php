@@ -39,7 +39,7 @@ class RefPaysRepository extends ServiceEntityRepository
 
         $stmt = $this->getEntityManager()->getConnection()->prepare("
             CREATE TABLE IF NOT EXISTS ref_pays (
-                uuid uuid PRIMARY KEY NOT NULL,
+                uuid UUID PRIMARY KEY NOT NULL,
                 id_pays_sir TEXT,
                 libelle_pays_min TEXT,
                 libelle_pays_maj TEXT,
