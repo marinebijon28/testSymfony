@@ -77,13 +77,14 @@ class RefDepartementRepository extends ServiceEntityRepository
         $stmt->executeQuery([]);
     }
 
-    public function existsData(SirDepartement $sir, RefRegion $refRegion): void
+    public function existsData(SirDepartement $sir, RefRegion $refRegion): RefDepartement
     {
-        if ($this->findOneBy([
-                "idDepartementSir" => $sir->getIdRegion(),
-                "libelleDepartementMin" => $sir->getLibelleDepartementMin(),
-                "libelleDepartementMaj" => $sir->getLibelleDepartementMaj()
-            ]) == null)
+        $res = $this->findOneBy([
+            "idDepartementSir" => $sir->getIdRegion(),
+            "libelleDepartementMin" => $sir->getLibelleDepartementMin(),
+            "libelleDepartementMaj" => $sir->getLibelleDepartementMaj()
+        ]);
+        if ($res == null)
         {
             $newDepartement = new RefDepartement();
             $newDepartement->setUuid(Uuid::v7());
@@ -102,7 +103,9 @@ class RefDepartementRepository extends ServiceEntityRepository
             $newDepartement->setArchivage(FALSE);
             $this->_objectManagerRef->persist($newDepartement);
             $this->_objectManagerRef->flush();
+            return $newDepartement;
         }
+        return $res;
     }
 
 

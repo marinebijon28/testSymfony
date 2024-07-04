@@ -80,13 +80,14 @@ class RefRegionRepository extends ServiceEntityRepository
 //        $stmt->executeQuery([]);
     }
 
-    public function existsData(SirRegion $sir, RefPays $refPays): void
+    public function existsData(SirRegion $sir, RefPays $refPays): RefRegion
     {
-        if ($this->findOneBy([
-                "idRegionSir" => $sir->getIdRegion(),
-                "libelleRegionMin" => $sir->getLibelleRegionMin(),
-                "libelleRegionMaj" => $sir->getLibelleRegionMaj()
-            ]) == null) {
+        $res = $this->findOneBy([
+            "idRegionSir" => $sir->getIdRegion(),
+            "libelleRegionMin" => $sir->getLibelleRegionMin(),
+            "libelleRegionMaj" => $sir->getLibelleRegionMaj()
+        ]);
+        if ($res == null) {
             $newRegion = new RefRegion();
             $newRegion->setUuid(Uuid::v7());
             $newRegion->setRefPays($refPays);
@@ -104,7 +105,9 @@ class RefRegionRepository extends ServiceEntityRepository
             $newRegion->setArchivage(FALSE);
             $this->_objectManagerRef->persist($newRegion);
             $this->_objectManagerRef->flush();
+            return $newRegion;
         }
+        return $res;
     }
 
     //    /**

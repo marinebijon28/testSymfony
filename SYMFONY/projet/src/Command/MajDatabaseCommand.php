@@ -88,12 +88,12 @@ class MajDatabaseCommand extends Command
             $time_end = microtime(true);
             $time = $time_end - $time_start;
             $newAppLog = new AppLog();
-            $appLog->fillingTheLogTableRefPays($refPays->getUuid(), $newAppLog, (string)$time,
+            $appLog->fillingTheLogTableRef($refPays->getUuid(), $newAppLog, (string)$time,
                 "CREATION_ENREGISTREMENT", "ref_pays");
             $appLog->dataRefPays($newAppLog, $refPays);
             if ($refPays->isArchivage() === TRUE) {
                 $newAppLog = new AppLog();
-                $appLog->fillingTheLogTableRefPays($refPays->getUuid(), $newAppLog, (string)$time,
+                $appLog->fillingTheLogTableRef($refPays->getUuid(), $newAppLog, (string)$time,
                     "ARCHIVAGE_ENREGISTREMENT", "ref_pays");
                 $appLog->dataRefPays($newAppLog, $refPays);
             }
@@ -115,12 +115,22 @@ class MajDatabaseCommand extends Command
         $resultSir = $sir->findAll();
         $progressBar = new ProgressBar($output, count($resultSir));
         $progressBar->start();
-
         for ($index = 0; $index < count($resultSir); $index++) {
-           // $time_start = microtime(true);
-            $ref->existsData($resultSir[$index], $refPays);
+            $time_start = microtime(true);
+            $refRegion = $ref->existsData($resultSir[$index], $refPays);
             $progressBar->advance();
-            //$time_end = microtime(true);
+            $time_end = microtime(true);
+            $time = $time_end - $time_start;
+            $newAppLog = new AppLog();
+            $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
+                "CREATION_ENREGISTREMENT", "ref_region");
+            $appLog->dataRefRegion($newAppLog, $refRegion);
+            if ($refRegion->isArchivage() === TRUE) {
+                $newAppLog = new AppLog();
+                $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
+                    "ARCHIVAGE_ENREGISTREMENT", "ref_region");
+                $appLog->dataRefRegion($newAppLog, $refRegion);
+            }
         }
         $progressBar->finish();
         printf("\n\n");
@@ -129,16 +139,28 @@ class MajDatabaseCommand extends Command
         $ref = $this->_objectManagerRef->getRepository(RefDepartement::class);
         $sir = $this->_objectManagerSir->getRepository(SirDepartement::class);
         $ref->ifExistTable();
-        // region
         $this->loopNameTable($output, "departement");
         $resultSir = $sir->findAll();
         $progressBar = new ProgressBar($output, count($resultSir));
         $progressBar->start();
         for ($index = 0; $index < count($resultSir); $index++) {
+            $time_start = microtime(true);
             $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)
                 ->findOneBy(["idRegionSir" => $resultSir[$index]->getIdRegion()]);
-            $ref->existsData($resultSir[$index], $refRegion);
+            $refDepartement = $ref->existsData($resultSir[$index], $refRegion);
             $progressBar->advance();
+            $time_end = microtime(true);
+            $time = $time_end - $time_start;
+            $newAppLog = new AppLog();
+            $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
+                "CREATION_ENREGISTREMENT", "ref_departement");
+            $appLog->dataRefDepartement($newAppLog, $refDepartement);
+            if ($refRegion->isArchivage() === TRUE) {
+                $newAppLog = new AppLog();
+                $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
+                    "ARCHIVAGE_ENREGISTREMENT", "ref_departement");
+                $appLog->dataRefDepartement($newAppLog, $refDepartement);
+            }
         }
         $progressBar->finish();
         printf("\n\n");

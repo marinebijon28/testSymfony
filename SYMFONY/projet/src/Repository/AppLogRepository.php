@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\AppLog;
+use App\Entity\RefDepartement;
 use App\Entity\RefPays;
+use App\Entity\RefRegion;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -56,26 +58,66 @@ class AppLogRepository extends ServiceEntityRepository
 
     public function dataRefPays(AppLog $newAppLog, RefPays $refPays) {
         $newAppLog->setData("{
-            \"uuid\" : \"" . $refPays->getUuid() . "\"," .
-            "\"id_pays_sir\" : \"" . $refPays->getIdPaysSir() . "\"," .
-            "\"libelle_pays_min\" : \"" . $refPays->getLibellePaysMin() . "\"," .
-            "\"libelle_pays_maj\" : \"" . $refPays->getLibellePaysMaj() . "\"," .
-            "\"code_iso_3\" : \"" . $refPays->getCodeIso3() . "\"," .
-            "\"nationalite\" : \"" . $refPays->getNationalite() . "\"," .
-            "\"personnel_creation\" : \"" . $refPays->getPersonnelCreation() . "\"," .
-            "\"personnel_modification\" : \"" . $refPays->getPersonnelModification() . "\"," .
-            "\"personnel_archivage\" : \"" . $refPays->getPersonnelArchivage() . "\"," .
-            "\"date_heure_creation\" : \"" . ($refPays->getDateHeureCreation() == null ? null :
-                $refPays->getDateHeureCreation()->format('Y-m-d H:i:s p')) . "\"," .
-            "\"date_heure_modification\" : \"" . ($refPays->getDateHeureModification() == null ? null :
-                $refPays->getDateHeureModification()->format('Y-m-d H:i:s p')) . "\"," .
-            "\"date_heure_archivage\" : \"" . ($refPays->getDateHeureArchivage() == null ? null :
-                $refPays->getDateHeureArchivage()->format('Y-m-d H:i:s p')) . "\"," .
-            "\"archivage\" : \"" . $refPays->isArchivage() . "\",
-        }\"");
+            \"uuid\" : \"" . $refPays->getUuid() . "\",
+            \"id_pays_sir\" : \"" . $refPays->getIdPaysSir() . "\",
+            \"libelle_pays_min\" : \"" . $refPays->getLibellePaysMin() . "\",
+            \"libelle_pays_maj\" : \"" . $refPays->getLibellePaysMaj() . "\",
+            \"code_iso_3\" : \"" . $refPays->getCodeIso3() . "\",
+            \"nationalite\" : \"" . $refPays->getNationalite() . "\",
+            \"personnel_creation\" : \"" . $refPays->getPersonnelCreation() . "\",
+            \"personnel_modification\" : \"" . $refPays->getPersonnelModification() . "\",
+            \"personnel_archivage\" : \"" . $refPays->getPersonnelArchivage() . "\",
+            \"date_heure_creation\" : \"" . ($refPays->getDateHeureCreation() == null ? null :
+                $refPays->getDateHeureCreation()->format('Y-m-d H:i:s p')) . "\",
+            \"date_heure_modification\" : \"" . ($refPays->getDateHeureModification() == null ? null :
+                $refPays->getDateHeureModification()->format('Y-m-d H:i:s p')) . "\",
+            \"date_heure_archivage\" : \"" . ($refPays->getDateHeureArchivage() == null ? null :
+                $refPays->getDateHeureArchivage()->format('Y-m-d H:i:s p')) . "\",
+            \"archivage\" : \"" . $refPays->isArchivage() . "\",
+        }");
+    }
+    public function dataRefRegion(AppLog $newAppLog, RefRegion $refRegion) {
+        $newAppLog->setData("{
+            \"uuid\" : \"" . $refRegion->getUuid() . "\",
+            \"ref_rpays\" : \"" . $refRegion->getRefPays()->getUuid() . "\",
+            \"id_region_sir\" : \"" . $refRegion->getIdRegionSir() . "\",
+            \"libelle_region_min\" : \"" . $refRegion->getLibelleRegionMin() . "\",
+            \"libelle_region_maj\" : \"" . $refRegion->getLibelleRegionMaj() . "\",
+            \"ajout_manuel\" : \"" . $refRegion->isAjoutManuel() . "\",
+            \"personnel_creation\" : \"" . $refRegion->getPersonnelCreation() . "\",
+            \"personnel_modification\" : \"" . $refRegion->getPersonnelModification() . "\",
+            \"personnel_archivage\" : \"" . $refRegion->getPersonnelArchivage() . "\",
+            \"date_heure_creation\" : \"" . ($refRegion->getDateHeureCreation() == null ? null :
+                $refRegion->getDateHeureCreation()->format('Y-m-d H:i:s p')) . "\",
+            \"date_heure_modification\" : \"" . ($refRegion->getDateHeureModification() == null ? null :
+                $refRegion->getDateHeureModification()->format('Y-m-d H:i:s p')) . "\",
+            \"date_heure_archivage\" : \"" . ($refRegion->getDateHeureArchivage() == null ? null :
+                $refRegion->getDateHeureArchivage()->format('Y-m-d H:i:s p')) . "\",
+            \"archivage\" : \"" . $refRegion->isArchivage() . "\",
+        }");
     }
 
-    public function fillingTheLogTableRefPays(Uuid $uidRef, AppLog $newAppLog, string $time, string $typeAction,
+    public function dataRefDepartement(AppLog $newAppLog, RefDepartement $refDepartement) {
+        $newAppLog->setData("{
+            \"uuid\" : \"" . $refDepartement->getUuid() . "\",
+            \"ref_region\" : \"" . $refDepartement->getRefRegion()->getUuid() . "\",
+            \"id_departement_sir\" : \"" . $refDepartement->getIddepartementSir() . "\",
+            \"libelle_departement_min\" : \"" . $refDepartement->getLibelleDepartementMin() . "\",
+            \"libelle_departement_maj\" : \"" . $refDepartement->getLibelleDepartementMaj() . "\",
+            \"personnel_creation\" : \"" . $refDepartement->getPersonnelCreation() . "\",
+            \"personnel_modification\" : \"" . $refDepartement->getPersonnelModification() . "\",
+            \"personnel_archivage\" : \"" . $refDepartement->getPersonnelArchivage() . "\",
+            \"date_heure_creation\" : \"" . ($refDepartement->getDateHeureCreation() == null ? null :
+                $refDepartement->getDateHeureCreation()->format('Y-m-d H:i:s p')) . "\",
+            \"date_heure_modification\" : \"" . ($refDepartement->getDateHeureModification() == null ? null :
+                $refDepartement->getDateHeureModification()->format('Y-m-d H:i:s p')) . "\",
+            \"date_heure_archivage\" : \"" . ($refDepartement->getDateHeureArchivage() == null ? null :
+                $refDepartement->getDateHeureArchivage()->format('Y-m-d H:i:s p')) . "\",
+            \"archivage\" : \"" . $refDepartement->isArchivage() . "\",
+        }");
+    }
+
+    public function fillingTheLogTableRef(Uuid $uidRef, AppLog $newAppLog, string $time, string $typeAction,
                                               string $nameTable) {
         $newAppLog->setUuid(Uuid::v7());
         $date = new DateTime("now", new DateTimeZone('Europe/Dublin'));
