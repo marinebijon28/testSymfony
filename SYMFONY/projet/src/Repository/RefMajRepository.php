@@ -6,6 +6,7 @@ use App\Entity\RefMaj;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<RefMaj>
@@ -36,32 +37,23 @@ class RefMajRepository extends ServiceEntityRepository
                 nb_enregistrement_total TEXT NOT NULL,
                 nb_enregistrement_ajout TEXT NOT NULL,
                 nb_enregistrement_modification TEXT NOT NULL,
-                nb_enregistrement_archivage NOT NULL,
+                nb_enregistrement_archivage TEXT NOT NULL
             )");
+        $stmt->executeQuery([]);
     }
 
-    //    /**
-    //     * @return RefMaj[] Returns an array of RefMaj objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?RefMaj
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function insertValue(object $toSummarize) {
+        $newRefMaj = new RefMaj();
+        $newRefMaj->setUuid(Uuid::v7());
+        $newRefMaj->setDateHeureDebut($toSummarize->dateStartTime);
+        $newRefMaj->setDateHeureFin($toSummarize->dateStartTime);
+        $newRefMaj->setDuree($toSummarize->duration);
+        $newRefMaj->setNomTable("ref_" . $toSummarize->tableRef);
+        $newRefMaj->setNbEnregistrementTotal($toSummarize->totalRecordNumber);
+        $newRefMaj->setNbEnregistrementAjout($toSummarize->numberOfAdditions);
+        $newRefMaj->setNbEnregistrementModification($toSummarize->numberOfChanges);
+        $newRefMaj->setNbEnregistrementArchivage($toSummarize->numberOfArchives);
+        $this->getEntityManager()->persist($newRefMaj);
+        $this->getEntityManager()->flush();
+    }
 }

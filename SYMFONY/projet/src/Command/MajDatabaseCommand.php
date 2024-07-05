@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\AppLog;
 use App\Entity\RefCommune;
 use App\Entity\RefDepartement;
+use App\Entity\RefMaj;
 use App\Entity\RefPays;
 use App\Entity\RefRegion;
 use App\Service\Sir\Entity\SirCommune;
@@ -95,26 +96,35 @@ class MajDatabaseCommand extends Command
 //        $returnCode = $this->getApplication()->Run($greetInput);
 
 
-        // Pays
+        // init
         $toSummarize = (object)array(
             "dateStartTime" => new DateTime("now", new DateTimeZone('Europe/Dublin')),
             "dateEndTime" => NULL,
             "duration" => NULL,
             "tableRef" => "pays",
-            "totalRecordNumber" => NULL,
+            "totalRecordNumber" => 0,
             "numberOfAdditions" => 0,
-            "numberOfChanges" => NULL,
-            "numberOfArchives" => NULL,
+            "numberOfChanges" => 0,
+            "numberOfArchives" => 0,
         );
         $timeStartDuration = microtime(true);
+
         $sir = $this->_objectManagerSir->getRepository(SirPays::class);
-        $resultSir = $sir->findAll();
-        $toSummarize->totalRecordNumber = count($resultSir);
-        $this->loopNameTable($output, "pays");
         $ref = $this->_objectManagerRef->getRepository(RefPays::class);
         $appLog = $this->_objectManagerRef->getRepository(AppLog::class);
+        $refMaj = $this->_objectManagerRef->getRepository(RefMaj::class);
+
+
+        // add table if not exist
+        $refMaj->ifExistTable();
         $appLog->ifExistTable();
         $ref->ifExistTable();
+
+        $resultSir = $sir->findAll();
+        $toSummarize->totalRecordNumber = count($resultSir);
+
+        // 
+        $this->loopNameTable($output, "pays");
         $progressBarRef = new ProgressBar($output, count($resultSir));
         $progressBarRef->start();
         for ($index = 0; $index < count($resultSir); $index++) {
@@ -146,6 +156,7 @@ class MajDatabaseCommand extends Command
         }
         $progressBarVerification->finish();
         printf("\n\n");
+
         $timeEndDuration = microtime(true);
         $toSummarize->dateEndTime = new DateTime("now", new DateTimeZone('Europe/Dublin'));
         $timeduration = $timeEndDuration - $timeStartDuration;
@@ -158,6 +169,8 @@ class MajDatabaseCommand extends Command
 
         $toSummarize->numberOfChanges = $ref->findByNbModifications();
         $toSummarize->numberOfArchives = $ref->findByNbOfArchives();
+
+        $refMaj->insertValue($toSummarize);
         $this->loopToSummarize($output, $toSummarize);
 
 
