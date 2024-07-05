@@ -60,7 +60,6 @@ class RefCommuneRepository extends ServiceEntityRepository
                 CONSTRAINT fk_26f6823e23ec7d29 FOREIGN KEY (ref_pays) REFERENCES ref_pays(uuid)
             );");
         $stmt->executeStatement();
-
         $stmt = $this->getEntityManager()->getConnection()->prepare("CREATE INDEX IF NOT EXISTS 
             fk__ref_commune__ref_departement ON public.ref_commune USING btree (ref_departement);");
         $stmt->executeQuery([]);
@@ -84,24 +83,22 @@ class RefCommuneRepository extends ServiceEntityRepository
         $stmt = $this->getEntityManager()->getConnection()->prepare("CREATE UNIQUE INDEX IF NOT EXISTS 
             ref_commune_pkey ON public.ref_commune USING btree (uuid);");
         $stmt->executeQuery([]);
-//        $stmt = $this->getEntityManager()->getConnection()->prepare("ALTER TABLE public.ref_commune ADD CONSTRAINT
-//            ref_commune_pkey PRIMARY KEY (uuid);");
-//        $stmt->executeQuery([]);
-//        $stmt = $this->getEntityManager()->getConnection()->prepare("ALTER TABLE public.ref_commune ADD CONSTRAINT
-//            fk_26f6823e23ec7d29 FOREIGN KEY (ref_pays) REFERENCES ref_pays(uuid);");
-//        $stmt->executeQuery([]);
-//        $stmt = $this->getEntityManager()->getConnection()->prepare("ALTER TABLE public.ref_commune ADD CONSTRAINT
-//            fk_26f6823e3b7fa3ef FOREIGN KEY (ref_departement) REFERENCES ref_departement(uuid);");
-//        $stmt->executeQuery([]);
-//        $stmt = $this->getEntityManager()->getConnection()->prepare("ALTER TABLE public.ref_commune ADD CONSTRAINT
-//            fk_26f6823e3b7fa3ef FOREIGN KEY (ref_departement) REFERENCES ref_departement(uuid);");
-//        $stmt->executeQuery([]);
     }
 
+    /** existsData
+     *
+     * if it does not find a result. It inserts into the table
+     *
+     * @param SirCommune $sir
+     * @param RefPays $refPays
+     * @param RefRegion $refRegion
+     * @param RefDepartement $refDepartement
+     * @return RefCommune
+     * @throws \Exception
+     */
     public function existsData(SirCommune $sir, RefPays $refPays, RefRegion $refRegion, RefDepartement $refDepartement):
-    RefCommune
+    int
     {
-        ini_set('memory_limit', '65536M');
         $res = $this->findOneBy([
             "idCommuneSir" => $sir->getIdCommune(),
             "libelleCommuneMin" => $sir->getLibelleCommuneMin(),
@@ -134,33 +131,42 @@ class RefCommuneRepository extends ServiceEntityRepository
             $newCommune->setArchivage(FALSE);
             $this->_objectManagerRef->persist($newCommune);
             $this->_objectManagerRef->flush();
-            return $newCommune;
+            return 1;
         }
-        return $res;
+        return 0;
     }
 
-    //    /**
-    //     * @return RefCommune[] Returns an array of RefCommune objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /** findByNbModifications
+     *
+     * return number row of personnel_modification is not null
+     *
+     * @return int return number row of personnel_modification is not null
+     * @throws Exception
+     */
+    public function findByNbModifications(): int
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare(
+            'SELECT uuid
+            FROM ref_commune
+            WHERE personnel_modification != \'NULL\''
+        );
+        return (int)$stmt->executeStatement();
+    }
 
-    //    public function findOneBySomeField($value): ?RefCommune
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /** findByNbOfArchives
+     *
+     * return number row of archivage is true
+     *
+     * @return int return number row of archivage is true
+     * @throws Exception
+     */
+    public function findByNbOfArchives(): int
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare(
+            'SELECT uuid
+                FROM ref_commune
+                WHERE archivage = true'
+        );
+        return (int)$stmt->executeStatement();
+    }
 }

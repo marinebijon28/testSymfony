@@ -3,10 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\RefDepartement;
-use App\Entity\RefPays;
 use App\Entity\RefRegion;
 use App\Service\Sir\Entity\SirDepartement;
-use App\Service\Sir\Entity\SirRegion;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -51,7 +49,6 @@ class RefDepartementRepository extends ServiceEntityRepository
                 date_heure_archivage TIMESTAMP(0) WITH TIME ZONE,
                 personnel_archivage TEXT,
                 archivage BOOLEAN NOT NULL,
-             /*   CONSTRAINT ref_departement_pkey PRIMARY KEY (uuid),*/
                 CONSTRAINT fk_3b7fa3ef7a7b998f FOREIGN KEY (ref_region) REFERENCES ref_region(uuid)
             );");
         $stmt->executeStatement();
@@ -77,7 +74,16 @@ class RefDepartementRepository extends ServiceEntityRepository
         $stmt->executeQuery([]);
     }
 
-    public function existsData(SirDepartement $sir, RefRegion $refRegion): RefDepartement
+    /** existsData
+     *
+     * if it does not find a result. It inserts into the table
+     *
+     * @param SirDepartement $sir
+     * @param RefRegion $refRegion
+     * @return int
+     * @throws \Exception
+     */
+    public function existsData(SirDepartement $sir, RefRegion $refRegion): int
     {
         $res = $this->findOneBy([
             "idDepartementSir" => $sir->getIdRegion(),
@@ -93,8 +99,8 @@ class RefDepartementRepository extends ServiceEntityRepository
             $newDepartement->setNumero(NULL);
             $newDepartement->setLibelleDepartementMin($sir->getLibelleDepartementMin());
             $newDepartement->setLibelleDepartementMaj($sir->getLibelleDepartementMaj());
-            $date = new DateTime("now", new DateTimeZone('Europe/Dublin'));
-            $newDepartement->setDateHeureCreation($date);
+            $newDepartement->setDateHeureCreation(new DateTime("now",
+                new DateTimeZone('Europe/Dublin')));
             $newDepartement->setPersonnelCreation("Administrateur");
             $newDepartement->setDateHeureModification(NULL);
             $newDepartement->setPersonnelModification(NULL);
@@ -103,35 +109,42 @@ class RefDepartementRepository extends ServiceEntityRepository
             $newDepartement->setArchivage(FALSE);
             $this->_objectManagerRef->persist($newDepartement);
             $this->_objectManagerRef->flush();
-            return $newDepartement;
+            return 1;
         }
-        return $res;
+        return 0;
     }
 
+    /** findByNbModifications
+     *
+     * return number row of personnel_modification is not null
+     *
+     * @return int return number row of personnel_modification is not null
+     * @throws Exception
+     */
+    public function findByNbModifications(): int
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare(
+            'SELECT uuid
+            FROM ref_departement
+            WHERE personnel_modification != \'NULL\''
+        );
+        return (int)$stmt->executeStatement();
+    }
 
-
-    //    /**
-    //     * @return RefDepartement[] Returns an array of RefDepartement objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?RefDepartement
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /** findByNbOfArchives
+     *
+     * return number row of archivage is true
+     *
+     * @return int return number row of archivage is true
+     * @throws Exception
+     */
+    public function findByNbOfArchives(): int
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare(
+            'SELECT uuid
+                FROM ref_departement
+                WHERE archivage = true'
+        );
+        return (int)$stmt->executeStatement();
+    }
 }

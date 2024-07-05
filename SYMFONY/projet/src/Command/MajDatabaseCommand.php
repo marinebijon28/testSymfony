@@ -9,6 +9,8 @@ use App\Entity\RefMaj;
 use App\Entity\RefPays;
 use App\Entity\RefRegion;
 use App\Repository\AppLogRepository;
+use App\Repository\RefCommuneRepository;
+use App\Repository\RefDepartementRepository;
 use App\Repository\RefMajRepository;
 use App\Repository\RefPaysRepository;
 use App\Repository\RefRegionRepository;
@@ -114,16 +116,21 @@ class MajDatabaseCommand extends Command
      * @throws \Exception
      */
     protected function fillingContryTable(OutputInterface $output, object $toSummarize, RefPaysRepository $ref,
-                                          array $resultSir): void {
+                                          array $resultSir): array {
         $this->loopNameTable($output, "pays");
         $progressBarRef = new ProgressBar($output, count($resultSir));
         $progressBarRef->start();
+        $time = array();
         for ($index = 0; $index < count($resultSir); $index++) {
+            $time_start = microtime(true);
             $toSummarize->numberOfAdditions += $ref->existsData($resultSir[$index]);
             $progressBarRef->advance();
+            $time_end = microtime(true);
+            $time[] = ($time_end - $time_start);
         }
         $progressBarRef->finish();
         printf("\n\n");
+        return $time;
     }
 
     /** fillingRegionTable
@@ -138,16 +145,87 @@ class MajDatabaseCommand extends Command
      * @return void
      */
     protected function fillingRegionTable(OutputInterface $output, object $toSummarize, RefRegionRepository $ref,
-                                          array           $resultSir, RefPays $refPays): void {
+                                          array $resultSir, RefPays $refPays): array {
         $this->loopNameTable($output, "region");
         $progressBarRef = new ProgressBar($output, count($resultSir));
         $progressBarRef->start();
+        $time = array();
         for ($index = 0; $index < count($resultSir); $index++) {
+            $time_start = microtime(true);
             $toSummarize->numberOfAdditions += $ref->existsData($resultSir[$index], $refPays);
             $progressBarRef->advance();
+            $time_end = microtime(true);
+            $time[] = ($time_end - $time_start);
         }
         $progressBarRef->finish();
         printf("\n\n");
+        return $time;
+    }
+
+    /** fillingDepartementTable
+     *
+     * insert data in departement table
+     *
+     * @param OutputInterface $output
+     * @param object $toSummarize
+     * @param RefDepartementRepository $ref
+     * @param array $resultSir
+     * @return void
+     * @throws \Exception
+     */
+    protected function fillingDepartementTable(OutputInterface $output, object $toSummarize,
+                                               RefDepartementRepository $ref, array $resultSir): array {
+        $this->loopNameTable($output, "departement");
+        $progressBarRef = new ProgressBar($output, count($resultSir));
+        $progressBarRef->start();
+        $time = array();
+        for ($index = 0; $index < count($resultSir); $index++) {
+            $time_start = microtime(true);
+            $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)
+                ->findOneBy(["idRegionSir" => $resultSir[$index]->getIdRegion()]);
+            $toSummarize->numberOfAdditions += $ref->existsData($resultSir[$index], $refRegion);
+            $progressBarRef->advance();
+            $time_end = microtime(true);
+            $time[] = ($time_end - $time_start);
+        }
+        $progressBarRef->finish();
+        printf("\n\n");
+        return $time;
+    }
+
+    /** fillingCommuneTable
+     *
+     * insert data in commune table
+     *
+     * @param OutputInterface $output
+     * @param object $toSummarize
+     * @param RefDepartementRepository $ref
+     * @param array $resultSir
+     * @param RefPays $refPays
+     * @return void
+     * @throws \Exception
+     */
+    protected function fillingCommuneTable(OutputInterface $output, object $toSummarize,
+                                           RefCommuneRepository $ref, array $resultSir, RefPays $refPays): array{
+        $this->loopNameTable($output, "commune");
+        $progressBarRef = new ProgressBar($output, count($resultSir));
+        $progressBarRef->start();
+        $time = array();
+        for ($index = 0; $index < count($resultSir); $index++) {
+            $time_start = microtime(true);
+            $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)
+                ->findOneBy(["idRegionSir" => $resultSir[$index]->getIdRegion()]);
+            $refDepartement = $this->_objectManagerRef->getRepository(RefDepartement::class)
+                ->findOneBy(["idDepartementSir" => $resultSir[$index]->getIdDepartement()]);
+            $toSummarize->numberOfAdditions += $ref->existsData($resultSir[$index], $refPays, $refRegion,
+                $refDepartement);
+            $progressBarRef->advance();
+            $time_end = microtime(true);
+            $time[] = ($time_end - $time_start);
+        }
+        $progressBarRef->finish();
+        printf("\n\n");
+        return $time;
     }
 
     /** fillingAppLogContryTable
@@ -160,22 +238,19 @@ class MajDatabaseCommand extends Command
      * @return void
      */
     protected function fillingAppLogContryTable(OutputInterface  $output, RefPaysRepository $ref,
-                                                AppLogRepository $appLog) {
+                                                AppLogRepository $appLog, array $time) {
         $resultRef = $ref->findAll();
         $this->loopNewDataInserted($output, "pays", count($resultRef));
         $progressBarVerification = new ProgressBar($output, count($resultRef));
         $progressBarVerification->start();
         for ($index = 0; $index < count($resultRef); $index++) {
-            $time_start = microtime(true);
-            $time_end = microtime(true);
-            $time = $time_end - $time_start;
             $newAppLog = new AppLog();
-            $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time,
+            $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time[$index],
                 "CREATION_ENREGISTREMENT", "ref_pays");
             $appLog->dataRefPays($newAppLog, $resultRef[$index]);
             if ($resultRef[$index]->isArchivage() === TRUE) {
                 $newAppLog = new AppLog();
-                $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time,
+                $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time[$index],
                     "ARCHIVAGE_ENREGISTREMENT", "ref_pays");
                 $appLog->dataRefPays($newAppLog, $resultRef[$index]);
             }
@@ -195,22 +270,19 @@ class MajDatabaseCommand extends Command
      * @return void
      */
     protected function fillingAppLogRegionTable(OutputInterface  $output, RefRegionRepository $ref,
-                                                AppLogRepository $appLog) {
+                                                AppLogRepository $appLog, array $time) {
         $resultRef = $ref->findAll();
         $this->loopNewDataInserted($output, "region", count($resultRef));
         $progressBarVerification = new ProgressBar($output, count($resultRef));
         $progressBarVerification->start();
         for ($index = 0; $index < count($resultRef); $index++) {
-            $time_start = microtime(true);
-            $time_end = microtime(true);
-            $time = $time_end - $time_start;
             $newAppLog = new AppLog();
-            $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time,
+            $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time[$index],
                 "CREATION_ENREGISTREMENT", "ref_region");
             $appLog->dataRefRegion($newAppLog, $resultRef[$index]);
             if ($resultRef[$index]->isArchivage() === TRUE) {
                 $newAppLog = new AppLog();
-                $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time,
+                $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time[$index],
                     "ARCHIVAGE_ENREGISTREMENT", "ref_region");
                 $appLog->dataRefRegion($newAppLog, $resultRef[$index]);
             }
@@ -220,6 +292,71 @@ class MajDatabaseCommand extends Command
         printf("\n\n");
     }
 
+    /** fillingAppLogDepartementTable
+     *
+     * insert data departement table in app_log
+     *
+     * @param OutputInterface $output
+     * @param RefDepartementRepository $ref
+     * @param AppLogRepository $appLog
+     * @return void
+     * @throws \Exception
+     */
+    protected function fillingAppLogDepartementTable(OutputInterface $output, RefDepartementRepository $ref,
+                                                     AppLogRepository $appLog, array $time) {
+        $resultRef = $ref->findAll();
+        $this->loopNewDataInserted($output, "departement", count($resultRef));
+        $progressBarVerification = new ProgressBar($output, count($resultRef));
+        $progressBarVerification->start();
+        for ($index = 0; $index < count($resultRef); $index++) {
+            $newAppLog = new AppLog();
+            $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time[$index],
+                "CREATION_ENREGISTREMENT", "ref_departement");
+            $appLog->dataRefDepartement($newAppLog, $resultRef[$index]);
+            if ($resultRef[$index]->isArchivage() === TRUE) {
+                $newAppLog = new AppLog();
+                $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time[$index],
+                    "ARCHIVAGE_ENREGISTREMENT", "ref_departement");
+                $appLog->dataRefDepartement($newAppLog, $resultRef[$index]);
+            }
+            $progressBarVerification->advance();
+        }
+        $progressBarVerification->finish();
+        printf("\n\n");
+    }
+
+    /** fillingAppLogCommuneTable
+     *
+     * insert data commune table in app_log
+     *
+     * @param OutputInterface $output
+     * @param RefCommuneRepository $ref
+     * @param AppLogRepository $appLog
+     * @return void
+     * @throws \Exception
+     */
+    protected function fillingAppLogCommuneTable(OutputInterface  $output, RefCommuneRepository $ref,
+                                                 AppLogRepository $appLog, array $time) {
+        $resultRef = $ref->findAll();
+        $this->loopNewDataInserted($output, "commune", count($resultRef));
+        $progressBarVerification = new ProgressBar($output, count($resultRef));
+        $progressBarVerification->start();
+        for ($index = 0; $index < count($resultRef); $index++) {
+            $newAppLog = new AppLog();
+            $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time[$index],
+                "CREATION_ENREGISTREMENT", "ref_commune");
+            $appLog->dataRefCommune($newAppLog, $resultRef[$index]);
+            if ($resultRef[$index]->isArchivage() === TRUE) {
+                $newAppLog = new AppLog();
+                $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time[$index],
+                    "ARCHIVAGE_ENREGISTREMENT", "ref_commune");
+                $appLog->dataRefCommune($newAppLog, $resultRef[$index]);
+            }
+            $progressBarVerification->advance();
+        }
+        $progressBarVerification->finish();
+        printf("\n\n");
+    }
 
     /** summary
      *
@@ -251,6 +388,8 @@ class MajDatabaseCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        ini_set('memory_limit', '4967296M');
+
         // outputs multiple lines to the console (adding "\n" at the end of each line)
         $output->writeln([
             '<fg=#E3CF30>Mise à jour des tables de référence.',
@@ -292,8 +431,8 @@ class MajDatabaseCommand extends Command
         $toSummarize->totalRecordNumber = count($resultSir);
 
         // Pays
-        $this->fillingContryTable($output, $toSummarize, $ref, $resultSir);
-        $this->fillingAppLogContryTable($output, $ref, $appLog);
+        $time = $this->fillingContryTable($output, $toSummarize, $ref, $resultSir);
+        $this->fillingAppLogContryTable($output, $ref, $appLog, $time);
         $toSummarize->numberOfChanges = $ref->findByNbModifications();
         $toSummarize->numberOfArchives = $ref->findByNbOfArchives();
         $this->summary($output, $toSummarize, $timeStartDuration, $refMaj);
@@ -324,44 +463,51 @@ class MajDatabaseCommand extends Command
 
 
         // region
-        $this->fillingRegionTable($output, $toSummarize, $ref, $resultSir, $refPays);
-        $this->fillingAppLogRegionTable($output, $ref, $appLog);
+        $time = $this->fillingRegionTable($output, $toSummarize, $ref, $resultSir, $refPays);
+        $this->fillingAppLogRegionTable($output, $ref, $appLog, $time);
         $toSummarize->numberOfChanges = $ref->findByNbModifications();
         $toSummarize->numberOfArchives = $ref->findByNbOfArchives();
         $this->summary($output, $toSummarize, $timeStartDuration, $refMaj);
 
+        // init
+        $toSummarize = (object)array(
+            "dateStartTime" => new DateTime("now", new DateTimeZone('Europe/Dublin')),
+            "dateEndTime" => NULL,
+            "duration" => NULL,
+            "tableRef" => "departement",
+            "totalRecordNumber" => 0,
+            "numberOfAdditions" => 0,
+            "numberOfChanges" => 0,
+            "numberOfArchives" => 0,
+        );
+        $timeStartDuration = microtime(true);
 
-        
-
-        // departement
+        // add table if not exist
         $ref = $this->_objectManagerRef->getRepository(RefDepartement::class);
         $sir = $this->_objectManagerSir->getRepository(SirDepartement::class);
         $ref->ifExistTable();
         $this->loopNameTable($output, "departement");
         $resultSir = $sir->findAll();
-        $progressBar = new ProgressBar($output, count($resultSir));
-        $progressBar->start();
-        for ($index = 0; $index < count($resultSir); $index++) {
-            $time_start = microtime(true);
-            $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)
-                ->findOneBy(["idRegionSir" => $resultSir[$index]->getIdRegion()]);
-            $refDepartement = $ref->existsData($resultSir[$index], $refRegion);
-            $progressBar->advance();
-            $time_end = microtime(true);
-            $time = $time_end - $time_start;
-            $newAppLog = new AppLog();
-            $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
-                "CREATION_ENREGISTREMENT", "ref_departement");
-            $appLog->dataRefDepartement($newAppLog, $refDepartement);
-            if ($refRegion->isArchivage() === TRUE) {
-                $newAppLog = new AppLog();
-                $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
-                    "ARCHIVAGE_ENREGISTREMENT", "ref_departement");
-                $appLog->dataRefDepartement($newAppLog, $refDepartement);
-            }
-        }
-        $progressBar->finish();
-        printf("\n\n");
+
+        // departement
+        $time = $this->fillingDepartementTable($output, $toSummarize, $ref, $resultSir);
+        $this->fillingAppLogDepartementTable($output, $ref, $appLog, $time);
+        $toSummarize->numberOfChanges = $ref->findByNbModifications();
+        $toSummarize->numberOfArchives = $ref->findByNbOfArchives();
+        $this->summary($output, $toSummarize, $timeStartDuration, $refMaj);
+
+        // init
+        $toSummarize = (object)array(
+            "dateStartTime" => new DateTime("now", new DateTimeZone('Europe/Dublin')),
+            "dateEndTime" => NULL,
+            "duration" => NULL,
+            "tableRef" => "commune",
+            "totalRecordNumber" => 0,
+            "numberOfAdditions" => 0,
+            "numberOfChanges" => 0,
+            "numberOfArchives" => 0,
+        );
+        $timeStartDuration = microtime(true);
 
         // commune
         $ref = $this->_objectManagerRef->getRepository(RefCommune::class);
@@ -369,33 +515,12 @@ class MajDatabaseCommand extends Command
         $ref->ifExistTable();
         $this->loopNameTable($output, "commune");
         $resultSir = $sir->findAll();
-        $progressBar = new ProgressBar($output, count($resultSir));
-        $progressBar->start();
-        for ($index = 0; $index < count($resultSir); $index++) {
-            $time_start = microtime(true);
-            $refRegion = $this->_objectManagerRef->getRepository(RefRegion::class)
-                ->findOneBy(["idRegionSir" => $resultSir[$index]->getIdRegion()]);
-            $refDepartement = $this->_objectManagerRef->getRepository(RefDepartement::class)
-                ->findOneBy(["idDepartementSir" => $resultSir[$index]->getIdDepartement()]);
-            $refCommune = $ref->existsData($resultSir[$index], $refPays, $refRegion, $refDepartement);
-            $progressBar->advance();
-            $time_end = microtime(true);
-            $time = $time_end - $time_start;
-            $newAppLog = new AppLog();
-            $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
-                "CREATION_ENREGISTREMENT", "ref_commune");
-            $appLog->dataRefCommune($newAppLog, $refCommune);
-            if ($refCommune->isArchivage() === TRUE) {
-                $newAppLog = new AppLog();
-                $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
-                    "ARCHIVAGE_ENREGISTREMENT", "ref_commune");
-                $appLog->dataRefCommune($newAppLog, $refCommune);
-            }
-        }
-        $progressBar->finish();
-        printf("\n\n");
 
-
+        $time = $this->fillingCommuneTable($output, $toSummarize, $ref, $resultSir, $refPays);
+        $this->fillingAppLogCommuneTable($output, $ref, $appLog, $time);
+        $toSummarize->numberOfChanges = $ref->findByNbModifications();
+        $toSummarize->numberOfArchives = $ref->findByNbOfArchives();
+        $this->summary($output, $toSummarize, $timeStartDuration, $refMaj);
 
         return Command::SUCCESS;
     }
