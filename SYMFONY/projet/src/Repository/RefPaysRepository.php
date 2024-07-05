@@ -67,7 +67,7 @@ class RefPaysRepository extends ServiceEntityRepository
             $stmt->executeQuery([]);
     }
 
-    public function insertValue(SirPays $sirPays): RefPays
+    public function insertValue(SirPays $sirPays): void
     {
         $refPays = new RefPays();
         $refPays->setUuid(Uuid::v7());
@@ -86,10 +86,9 @@ class RefPaysRepository extends ServiceEntityRepository
         $refPays->setPersonnelArchivage(NULL);
         $this->getEntityManager()->persist($refPays);
         $this->getEntityManager()->flush();
-        return $refPays;
     }
 
-    public function existsData(SirPays $sir): RefPays
+    public function existsData(SirPays $sir): int
     {
         $res =$this->findOneBy([
             "idPaysSir" => $sir->getIdPays(),
@@ -99,9 +98,33 @@ class RefPaysRepository extends ServiceEntityRepository
             "nationalite" => $sir->getNationalite(),
         ]);
         if ($res == null) {
-            return $this->insertValue($sir);
+           $this->insertValue($sir);
+           return 1;
         }
-        return $res;
+        return 0;
+    }
+
+        public function findByNbModifications(): int
+        {
+            $stmt = $this->getEntityManager()->getConnection()->prepare(
+                'SELECT uuid
+                FROM ref_pays
+                WHERE personnel_modification != \'NULL\''
+            );
+            // returns an array of Product objects
+            return (int)$stmt->executeStatement();
+        }
+
+    public function findByNbOfArchives(): int
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare(
+            'SELECT uuid
+                FROM ref_pays
+                WHERE archivage = true'
+        );
+        return (int)$stmt->executeStatement();
+
+        // returns an array of Product objects
     }
 
     //    /**

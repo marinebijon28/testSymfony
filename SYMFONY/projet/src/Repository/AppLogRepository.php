@@ -48,12 +48,6 @@ class AppLogRepository extends ServiceEntityRepository
                 data TEXT
             )");
         $stmt->executeQuery([]);
-//        $stmt = $this->getEntityManager()->getConnection()->prepare("CREATE UNIQUE INDEX ref_maj_pkey
-//            ON public.ref_maj USING btree (uuid);");
-//        $stmt->executeQuery([]);
-//        $stmt = $this->getEntityManager()->getConnection()->prepare("ALTER TABLE app_log
-//            ADD CONSTRAINT app_log_pkey PRIMARY KEY (uuid);");
-//        $stmt->executeQuery([]);
     }
 
 
@@ -161,10 +155,6 @@ class AppLogRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-//    public function fillingTheLogTableRefRegion(RefRegion $refRegion, string $time) {
-//
-//
-//    }
 
     //    /**
     //     * @return AppLog[] Returns an array of AppLog objects

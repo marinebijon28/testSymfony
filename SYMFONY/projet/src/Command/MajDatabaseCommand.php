@@ -47,11 +47,36 @@ class MajDatabaseCommand extends Command
        }
    */
 
-    protected function loopNameTable(OutputInterface $output, String $nameTable): void {
+    protected function loopNameTable(OutputInterface $output, string $nameTable): void {
         $output->writeln([
-            'Mise à jour de la table ref_' . $nameTable . '.',
-            '---------------------------------',
-            'vérification des données : sir_' . $nameTable . ' -> ref_' . $nameTable . '.'
+            "<fg=#E3CF30>Mise à jour de la table ref_" . $nameTable . ".",
+            "---------------------------------</>",
+            "<info>vérification des données : sir_" . $nameTable . " -> ref_" . $nameTable . ".</info>",
+        ]);
+    }
+
+    protected function loopNewDataInserted(OutputInterface $output, string $nameTable, int $nbData)
+    {
+        $output->writeln([
+            "Ajout des nouvelles données (" . $nbData . ")",
+            $nbData . " données insérées\n",
+            "<info>Vérification : ref_" . $nameTable . "</info>"
+        ]);
+    }
+
+    protected function loopToSummarize(OutputInterface $output, object $toSummarize): void
+    {
+        $output->writeln([
+            "<info>Résumé : </info>",
+            "Ajout des nouvelles données (" . $toSummarize->numberOfAdditions . ")",
+            "Date heure début : " . $toSummarize->dateStartTime->format("Y-m-d H:i:s"),
+            "Date heure fin : " . $toSummarize->dateEndTime->format("Y-m-d H:i:s"),
+            "Durée : " . $toSummarize->duration,
+            "Table : ref_" . $toSummarize->tableRef,
+            "Nombre d'enregistrement total : " . $toSummarize->totalRecordNumber,
+            "Nombre d'ajouts : " . $toSummarize->numberOfAdditions,
+            "Nombre de modifications : " . $toSummarize->numberOfChanges,
+            "Nombre d'archivages : " . $toSummarize->numberOfArchives . "\n"
         ]);
     }
 
@@ -59,8 +84,8 @@ class MajDatabaseCommand extends Command
     {
         // outputs multiple lines to the console (adding "\n" at the end of each line)
         $output->writeln([
-            'Mise à jour des tables de référence.',
-            '===================================='
+            '<fg=#E3CF30>Mise à jour des tables de référence.',
+            '====================================</>'
         ]);
 
 // permet de lancer les commandes consoles de symfony
@@ -71,35 +96,69 @@ class MajDatabaseCommand extends Command
 
 
         // Pays
+        $toSummarize = (object)array(
+            "dateStartTime" => new DateTime("now", new DateTimeZone('Europe/Dublin')),
+            "dateEndTime" => NULL,
+            "duration" => NULL,
+            "tableRef" => "pays",
+            "totalRecordNumber" => NULL,
+            "numberOfAdditions" => 0,
+            "numberOfChanges" => NULL,
+            "numberOfArchives" => NULL,
+        );
+        $timeStartDuration = microtime(true);
+        $sir = $this->_objectManagerSir->getRepository(SirPays::class);
+        $resultSir = $sir->findAll();
+        $toSummarize->totalRecordNumber = count($resultSir);
         $this->loopNameTable($output, "pays");
         $ref = $this->_objectManagerRef->getRepository(RefPays::class);
-        $sir = $this->_objectManagerSir->getRepository(SirPays::class);
         $appLog = $this->_objectManagerRef->getRepository(AppLog::class);
         $appLog->ifExistTable();
-
         $ref->ifExistTable();
-        $resultSir = $sir->findAll();
-        $progressBar = new ProgressBar($output, count($resultSir));
-        $progressBar->start();
+        $progressBarRef = new ProgressBar($output, count($resultSir));
+        $progressBarRef->start();
         for ($index = 0; $index < count($resultSir); $index++) {
+            $toSummarize->numberOfAdditions += $ref->existsData($resultSir[$index]);
+            $progressBarRef->advance();
+        }
+        $progressBarRef->finish();
+        printf("\n\n");
+
+        $resultRef = $ref->findAll();
+        $this->loopNewDataInserted($output, "pays", count($resultRef));
+        $progressBarVerification = new ProgressBar($output, count($resultRef));
+        $progressBarVerification->start();
+        for ($index = 0; $index < count($resultRef); $index++) {
             $time_start = microtime(true);
-            $refPays = $ref->existsData($resultSir[$index]);
-            $progressBar->advance();
             $time_end = microtime(true);
             $time = $time_end - $time_start;
             $newAppLog = new AppLog();
-            $appLog->fillingTheLogTableRef($refPays->getUuid(), $newAppLog, (string)$time,
+            $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time,
                 "CREATION_ENREGISTREMENT", "ref_pays");
-            $appLog->dataRefPays($newAppLog, $refPays);
-            if ($refPays->isArchivage() === TRUE) {
+            $appLog->dataRefPays($newAppLog, $resultRef[$index]);
+            if ($resultRef[$index]->isArchivage() === TRUE) {
                 $newAppLog = new AppLog();
-                $appLog->fillingTheLogTableRef($refPays->getUuid(), $newAppLog, (string)$time,
+                $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time,
                     "ARCHIVAGE_ENREGISTREMENT", "ref_pays");
-                $appLog->dataRefPays($newAppLog, $refPays);
+                $appLog->dataRefPays($newAppLog, $resultRef[$index]);
             }
+            $progressBarVerification->advance();
         }
-        $progressBar->finish();
+        $progressBarVerification->finish();
         printf("\n\n");
+        $timeEndDuration = microtime(true);
+        $toSummarize->dateEndTime = new DateTime("now", new DateTimeZone('Europe/Dublin'));
+        $timeduration = $timeEndDuration - $timeStartDuration;
+        $hours = (int)($timeduration / 60 / 60);
+        $minutes = (int)($timeduration / 60) - $hours * 60;
+        $seconds = (int)$timeduration - $hours * 60 * 60 - $minutes * 60;
+        $toSummarize->duration = ($hours == 0 ? "00" : $hours) . ":" .
+            ($minutes == 0 ? "00" : ($minutes < 10 ? "0" . $minutes : $minutes)) . ":" .
+            ($seconds == 0 ? "00" : ($seconds < 10 ? "0" . $seconds : $seconds));
+
+        $toSummarize->numberOfChanges = $ref->findByNbModifications();
+        $toSummarize->numberOfArchives = $ref->findByNbOfArchives();
+        $this->loopToSummarize($output, $toSummarize);
 
 
 
