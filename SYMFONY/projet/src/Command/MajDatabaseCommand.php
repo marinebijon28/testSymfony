@@ -11,12 +11,14 @@ use App\Entity\RefRegion;
 use App\Repository\AppLogRepository;
 use App\Repository\RefMajRepository;
 use App\Repository\RefPaysRepository;
+use App\Repository\RefRegionRepository;
 use App\Service\Sir\Entity\SirCommune;
 use App\Service\Sir\Entity\SirDepartement;
 use App\Service\Sir\Entity\SirPays;
 use App\Service\Sir\Entity\SirRegion;
 use DateTime;
 use DateTimeZone;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -42,15 +44,14 @@ class MajDatabaseCommand extends Command
         $this->_objectManagerRef = $managerRegistry->getManager('default');
     }
 
-    /*   protected function configure(): void
-       {
-           $this
-               ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-               ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-           ;
-       }
-   */
-
+    /** loopNameTable
+     *
+     * output standard of all names tables
+     *
+     * @param OutputInterface $output
+     * @param string $nameTable
+     * @return void
+     */
     protected function loopNameTable(OutputInterface $output, string $nameTable): void {
         $output->writeln([
             "<fg=#E3CF30>Mise à jour de la table ref_" . $nameTable . ".",
@@ -59,6 +60,15 @@ class MajDatabaseCommand extends Command
         ]);
     }
 
+    /** loopNewDataInserted
+     *
+     * output standard of update table
+     *
+     * @param OutputInterface $output
+     * @param string $nameTable
+     * @param int $nbData
+     * @return void
+     */
     protected function loopNewDataInserted(OutputInterface $output, string $nameTable, int $nbData)
     {
         $output->writeln([
@@ -68,6 +78,14 @@ class MajDatabaseCommand extends Command
         ]);
     }
 
+    /** loopToSummarize
+     *
+     * summary of updates tables
+     *
+     * @param OutputInterface $output
+     * @param object $toSummarize
+     * @return void
+     */
     protected function loopToSummarize(OutputInterface $output, object $toSummarize): void
     {
         $output->writeln([
@@ -84,6 +102,17 @@ class MajDatabaseCommand extends Command
         ]);
     }
 
+    /** fillingContryTable
+     *
+     * insert data in contry table
+     *
+     * @param OutputInterface $output
+     * @param object $toSummarize
+     * @param RefPaysRepository $ref
+     * @param array $resultSir
+     * @return void
+     * @throws \Exception
+     */
     protected function fillingContryTable(OutputInterface $output, object $toSummarize, RefPaysRepository $ref,
                                           array $resultSir): void {
         $this->loopNameTable($output, "pays");
@@ -97,7 +126,40 @@ class MajDatabaseCommand extends Command
         printf("\n\n");
     }
 
-    protected function fillingAppLogContryTable(OutputInterface $output, RefPaysRepository $ref,
+    /** fillingRegionTable
+     *
+     * insert data in region table
+     *
+     * @param OutputInterface $output
+     * @param object $toSummarize
+     * @param RefRegionRepository $ref
+     * @param array $resultSir
+     * @param RefPays $refPays
+     * @return void
+     */
+    protected function fillingRegionTable(OutputInterface $output, object $toSummarize, RefRegionRepository $ref,
+                                          array           $resultSir, RefPays $refPays): void {
+        $this->loopNameTable($output, "region");
+        $progressBarRef = new ProgressBar($output, count($resultSir));
+        $progressBarRef->start();
+        for ($index = 0; $index < count($resultSir); $index++) {
+            $toSummarize->numberOfAdditions += $ref->existsData($resultSir[$index], $refPays);
+            $progressBarRef->advance();
+        }
+        $progressBarRef->finish();
+        printf("\n\n");
+    }
+
+    /** fillingAppLogContryTable
+     *
+     * insert data contry table in app_log
+     *
+     * @param OutputInterface $output
+     * @param RefPaysRepository $ref
+     * @param AppLogRepository $appLog
+     * @return void
+     */
+    protected function fillingAppLogContryTable(OutputInterface  $output, RefPaysRepository $ref,
                                                 AppLogRepository $appLog) {
         $resultRef = $ref->findAll();
         $this->loopNewDataInserted($output, "pays", count($resultRef));
@@ -123,7 +185,54 @@ class MajDatabaseCommand extends Command
         printf("\n\n");
     }
 
-    protected function summaryContry(OutputInterface $output, RefPaysRepository $ref, object $toSummarize,
+    /** fillingAppLogRegionTable
+     *
+     * insert data region table in app_log
+     *
+     * @param OutputInterface $output
+     * @param RefRegionRepository $ref
+     * @param AppLogRepository $appLog
+     * @return void
+     */
+    protected function fillingAppLogRegionTable(OutputInterface  $output, RefRegionRepository $ref,
+                                                AppLogRepository $appLog) {
+        $resultRef = $ref->findAll();
+        $this->loopNewDataInserted($output, "region", count($resultRef));
+        $progressBarVerification = new ProgressBar($output, count($resultRef));
+        $progressBarVerification->start();
+        for ($index = 0; $index < count($resultRef); $index++) {
+            $time_start = microtime(true);
+            $time_end = microtime(true);
+            $time = $time_end - $time_start;
+            $newAppLog = new AppLog();
+            $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time,
+                "CREATION_ENREGISTREMENT", "ref_region");
+            $appLog->dataRefRegion($newAppLog, $resultRef[$index]);
+            if ($resultRef[$index]->isArchivage() === TRUE) {
+                $newAppLog = new AppLog();
+                $appLog->fillingTheLogTableRef($resultRef[$index]->getUuid(), $newAppLog, (string)$time,
+                    "ARCHIVAGE_ENREGISTREMENT", "ref_region");
+                $appLog->dataRefRegion($newAppLog, $resultRef[$index]);
+            }
+            $progressBarVerification->advance();
+        }
+        $progressBarVerification->finish();
+        printf("\n\n");
+    }
+
+
+    /** summary
+     *
+     * insert data of update table in maj_ref
+     *
+     * @param OutputInterface $output
+     * @param object $toSummarize
+     * @param float $timeStartDuration
+     * @param RefMajRepository $refMaj
+     * @return void
+     * @throws Exception
+     */
+    protected function summary(OutputInterface $output, object $toSummarize,
                                      float $timeStartDuration, RefMajRepository $refMaj) {
         $timeEndDuration = microtime(true);
         $toSummarize->dateEndTime = new DateTime("now", new DateTimeZone('Europe/Dublin'));
@@ -135,12 +244,10 @@ class MajDatabaseCommand extends Command
             ($minutes == 0 ? "00" : ($minutes < 10 ? "0" . $minutes : $minutes)) . ":" .
             ($seconds == 0 ? "00" : ($seconds < 10 ? "0" . $seconds : $seconds));
 
-        $toSummarize->numberOfChanges = $ref->findByNbModifications();
-        $toSummarize->numberOfArchives = $ref->findByNbOfArchives();
-
         $refMaj->insertValue($toSummarize);
         $this->loopToSummarize($output, $toSummarize);
     }
+
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -187,39 +294,44 @@ class MajDatabaseCommand extends Command
         // Pays
         $this->fillingContryTable($output, $toSummarize, $ref, $resultSir);
         $this->fillingAppLogContryTable($output, $ref, $appLog);
-        $this->summaryContry($output, $ref, $toSummarize, $timeStartDuration, $refMaj);
+        $toSummarize->numberOfChanges = $ref->findByNbModifications();
+        $toSummarize->numberOfArchives = $ref->findByNbOfArchives();
+        $this->summary($output, $toSummarize, $timeStartDuration, $refMaj);
+
 
         $refPays = $this->_objectManagerRef->getRepository(RefPays::class)
             ->findOneBy(["libellePaysMaj" => "FRANCE"]);
 
+        // init
+        $toSummarize = (object)array(
+            "dateStartTime" => new DateTime("now", new DateTimeZone('Europe/Dublin')),
+            "dateEndTime" => NULL,
+            "duration" => NULL,
+            "tableRef" => "region",
+            "totalRecordNumber" => 0,
+            "numberOfAdditions" => 0,
+            "numberOfChanges" => 0,
+            "numberOfArchives" => 0,
+        );
+        $timeStartDuration = microtime(true);
 
-        // region
+        // add table if not exist
         $this->loopNameTable($output, "region");
         $ref = $this->_objectManagerRef->getRepository(RefRegion::class);
         $sir = $this->_objectManagerSir->getRepository(SirRegion::class);
         $ref->ifExistTable();
         $resultSir = $sir->findAll();
-        $progressBar = new ProgressBar($output, count($resultSir));
-        $progressBar->start();
-        for ($index = 0; $index < count($resultSir); $index++) {
-            $time_start = microtime(true);
-            $refRegion = $ref->existsData($resultSir[$index], $refPays);
-            $progressBar->advance();
-            $time_end = microtime(true);
-            $time = $time_end - $time_start;
-            $newAppLog = new AppLog();
-            $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
-                "CREATION_ENREGISTREMENT", "ref_region");
-            $appLog->dataRefRegion($newAppLog, $refRegion);
-            if ($refRegion->isArchivage() === TRUE) {
-                $newAppLog = new AppLog();
-                $appLog->fillingTheLogTableRef($refRegion->getUuid(), $newAppLog, (string)$time,
-                    "ARCHIVAGE_ENREGISTREMENT", "ref_region");
-                $appLog->dataRefRegion($newAppLog, $refRegion);
-            }
-        }
-        $progressBar->finish();
-        printf("\n\n");
+
+
+        // region
+        $this->fillingRegionTable($output, $toSummarize, $ref, $resultSir, $refPays);
+        $this->fillingAppLogRegionTable($output, $ref, $appLog);
+        $toSummarize->numberOfChanges = $ref->findByNbModifications();
+        $toSummarize->numberOfArchives = $ref->findByNbOfArchives();
+        $this->summary($output, $toSummarize, $timeStartDuration, $refMaj);
+
+
+        
 
         // departement
         $ref = $this->_objectManagerRef->getRepository(RefDepartement::class);
@@ -284,21 +396,6 @@ class MajDatabaseCommand extends Command
         printf("\n\n");
 
 
-
-
-        // base création command
-       // $io = new SymfonyStyle($input, $output);
-       /* $arg1 = $input->getArgument('arg1');
-
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
-        }
-
-        if ($input->getOption('option1')) {
-            // ...
-        }*/
-
-      //  $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
         return Command::SUCCESS;
     }

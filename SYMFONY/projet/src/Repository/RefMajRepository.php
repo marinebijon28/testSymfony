@@ -42,6 +42,13 @@ class RefMajRepository extends ServiceEntityRepository
         $stmt->executeQuery([]);
     }
 
+    /** insertValue
+     *
+     * insert Value in RefMaj
+     *
+     * @param object $toSummarize
+     * @return void
+     */
     public function insertValue(object $toSummarize) {
         $newRefMaj = new RefMaj();
         $newRefMaj->setUuid(Uuid::v7());

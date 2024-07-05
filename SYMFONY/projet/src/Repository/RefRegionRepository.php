@@ -72,15 +72,17 @@ class RefRegionRepository extends ServiceEntityRepository
         $stmt = $this->getEntityManager()->getConnection()->prepare("CREATE UNIQUE INDEX IF NOT EXISTS
             ref_region_pkey ON public.ref_region USING btree (uuid);");
         $stmt->executeQuery([]);
-//        $stmt = $this->getEntityManager()->getConnection()->prepare("ALTER TABLE public.ref_region ADD
-//                CONSTRAINT fk_7a7b998f23ec7d29 FOREIGN KEY (ref_pays) REFERENCES ref_pays(uuid);");
-//        $stmt->executeQuery([]);
-//        $stmt = $this->getEntityManager()->getConnection()->prepare("ALTER TABLE public.ref_region ADD CONSTRAINT
-//            ref_region_pkey PRIMARY KEY (uuid);");
-//        $stmt->executeQuery([]);
     }
 
-    public function existsData(SirRegion $sir, RefPays $refPays): RefRegion
+    /** existsData
+     *
+     * if it does not find a result. It inserts into the table
+     *
+     * @param SirPays $sir
+     * @return int return 1 if result else return 0
+     * @throws \Exception
+     */
+    public function existsData(SirRegion $sir, RefPays $refPays): int
     {
         $res = $this->findOneBy([
             "idRegionSir" => $sir->getIdRegion(),
@@ -105,33 +107,42 @@ class RefRegionRepository extends ServiceEntityRepository
             $newRegion->setArchivage(FALSE);
             $this->_objectManagerRef->persist($newRegion);
             $this->_objectManagerRef->flush();
-            return $newRegion;
+            return 1;
         }
-        return $res;
+        return 0;
     }
 
-    //    /**
-    //     * @return RefRegion[] Returns an array of RefRegion objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /** findByNbModifications
+     *
+     * return number row of personnel_modification is not null
+     *
+     * @return int return number row of personnel_modification is not null
+     * @throws Exception
+     */
+    public function findByNbModifications(): int
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare(
+            'SELECT uuid
+            FROM ref_region
+            WHERE personnel_modification != \'NULL\''
+        );
+        return (int)$stmt->executeStatement();
+    }
 
-    //    public function findOneBySomeField($value): ?RefRegion
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /** findByNbOfArchives
+     *
+     * return number row of archivage is true
+     *
+     * @return int return number row of archivage is true
+     * @throws Exception
+     */
+    public function findByNbOfArchives(): int
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare(
+            'SELECT uuid
+                FROM ref_region
+                WHERE archivage = true'
+        );
+        return (int)$stmt->executeStatement();
+    }
 }

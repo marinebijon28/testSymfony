@@ -80,6 +80,14 @@ class AppLogRepository extends ServiceEntityRepository
         }");
     }
 
+    /** dataRefRegion
+     *
+     * this is the data column of the region table
+     *
+     * @param AppLog $newAppLog
+     * @param RefRegion $refRegion
+     * @return void
+     */
     public function dataRefRegion(AppLog $newAppLog, RefRegion $refRegion) {
         $newAppLog->setData("{
             \"uuid\" : \"" . $refRegion->getUuid() . "\",
@@ -101,6 +109,14 @@ class AppLogRepository extends ServiceEntityRepository
         }");
     }
 
+    /** dataRefDepartement
+     *
+     * this is the data column of the departement table
+     *
+     * @param AppLog $newAppLog
+     * @param RefDepartement $refDepartement
+     * @return void
+     */
     public function dataRefDepartement(AppLog $newAppLog, RefDepartement $refDepartement) {
         $newAppLog->setData("{
             \"uuid\" : \"" . $refDepartement->getUuid() . "\",
@@ -121,6 +137,14 @@ class AppLogRepository extends ServiceEntityRepository
         }");
     }
 
+    /** dataRefCommune
+     *
+     * this is the data column of the commune table
+     *
+     * @param AppLog $newAppLog
+     * @param RefCommune $RefCommune
+     * @return void
+     */
     public function dataRefCommune(AppLog $newAppLog, RefCommune $RefCommune) {
         $newAppLog->setData("{
             \"uuid\" : \"" . $RefCommune->getUuid() . "\",
@@ -147,8 +171,20 @@ class AppLogRepository extends ServiceEntityRepository
         }");
     }
 
-    public function fillingTheLogTableRef(Uuid $uidRef, AppLog $newAppLog, string $time, string $typeAction,
-                                              string $nameTable) {
+    /** fillingTheLogTableRef
+     *
+     * insert Value in LogTable
+     *
+     * @param Uuid $uidRef
+     * @param AppLog $newAppLog
+     * @param string $time
+     * @param string $typeAction
+     * @param string $nameTable
+     * @return void
+     * @throws \Exception
+     */
+    public function fillingTheLogTableRef(Uuid   $uidRef, AppLog $newAppLog, string $time, string $typeAction,
+                                          string $nameTable) {
         $newAppLog->setUuid(Uuid::v7());
         $date = new DateTime("now", new DateTimeZone('Europe/Dublin'));
         $newAppLog->setDateHeureAction($date);
