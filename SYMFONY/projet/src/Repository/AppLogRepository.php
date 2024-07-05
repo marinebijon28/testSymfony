@@ -51,6 +51,14 @@ class AppLogRepository extends ServiceEntityRepository
     }
 
 
+    /** dataRefPays
+     *
+     * this is the data column of the country table
+     *
+     * @param AppLog $newAppLog
+     * @param RefPays $refPays
+     * @return void
+     */
     public function dataRefPays(AppLog $newAppLog, RefPays $refPays) {
         $newAppLog->setData("{
             \"uuid\" : \"" . $refPays->getUuid() . "\",
@@ -71,6 +79,7 @@ class AppLogRepository extends ServiceEntityRepository
             \"archivage\" : \"" . $refPays->isArchivage() . "\",
         }");
     }
+
     public function dataRefRegion(AppLog $newAppLog, RefRegion $refRegion) {
         $newAppLog->setData("{
             \"uuid\" : \"" . $refRegion->getUuid() . "\",

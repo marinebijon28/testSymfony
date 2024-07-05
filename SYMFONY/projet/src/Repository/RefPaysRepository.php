@@ -67,6 +67,15 @@ class RefPaysRepository extends ServiceEntityRepository
             $stmt->executeQuery([]);
     }
 
+
+    /** insertValue
+     *
+     * insert Value in RefPays
+     *
+     * @param SirPays $sirPays
+     * @return void
+     * @throws \Exception
+     */
     public function insertValue(SirPays $sirPays): void
     {
         $refPays = new RefPays();
@@ -88,6 +97,14 @@ class RefPaysRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
+    /** existsData
+     *
+     * if it does not find a result. It inserts into the table
+     *
+     * @param SirPays $sir
+     * @return int return 1 if result else return 0
+     * @throws \Exception
+     */
     public function existsData(SirPays $sir): int
     {
         $res =$this->findOneBy([
@@ -104,17 +121,30 @@ class RefPaysRepository extends ServiceEntityRepository
         return 0;
     }
 
-        public function findByNbModifications(): int
-        {
-            $stmt = $this->getEntityManager()->getConnection()->prepare(
-                'SELECT uuid
-                FROM ref_pays
-                WHERE personnel_modification != \'NULL\''
-            );
-            // returns an array of Product objects
-            return (int)$stmt->executeStatement();
-        }
+    /** findByNbModifications
+     *
+     * return number row of personnel_modification is not null
+     *
+     * @return int return number row of personnel_modification is not null
+     * @throws Exception
+     */
+    public function findByNbModifications(): int
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare(
+            'SELECT uuid
+            FROM ref_pays
+            WHERE personnel_modification != \'NULL\''
+        );
+        return (int)$stmt->executeStatement();
+    }
 
+    /** findByNbOfArchives
+     *
+     * return number row of archivage is true
+     *
+     * @return int return number row of archivage is true
+     * @throws Exception
+     */
     public function findByNbOfArchives(): int
     {
         $stmt = $this->getEntityManager()->getConnection()->prepare(
@@ -123,6 +153,5 @@ class RefPaysRepository extends ServiceEntityRepository
                 WHERE archivage = true'
         );
         return (int)$stmt->executeStatement();
-
     }
 }
